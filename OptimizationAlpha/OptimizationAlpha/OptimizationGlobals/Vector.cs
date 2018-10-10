@@ -10,13 +10,14 @@ namespace OptimizationGlobals
 
     class Vector
     {
-        public readonly List<double> Values;
+        public List<double> Values { get; set; }
 
         public Vector(int size)
         {
-            this.Values = new List<double>(size);
+            this.Values = new List<double>();
             for(int i=0; i<size;i++)
             {
+                this.Values.Add(0);
                 this.Values[i] = 0;
             }
         }

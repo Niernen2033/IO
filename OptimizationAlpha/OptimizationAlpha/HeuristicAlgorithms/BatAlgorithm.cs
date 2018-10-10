@@ -21,6 +21,7 @@ namespace HeuristicAlgorithms
             public double RateOfImpulses { get; set; }
 
             private LineRandom randomGenerator;
+            private bool isWorking;
 
             public Bat(params double[] arguments) : base()
             {
@@ -63,41 +64,59 @@ namespace HeuristicAlgorithms
 
         private List<Bat> bats;
         private Function function;
-        private Compartment range;
+        private List<Compartment> range;
         private int batsCount;
         private double alpha;
         private double gamma;
         private Compartment frequency;
         private LineRandom randomGenerator;
+        private int canIEnditerator;
 
         public ReadOnlyCollection<Bat> Bats { get { return this.bats.AsReadOnly(); } }
         public int AcctualIteration { get; private set; }
 
-        public BatAlgorithm(Function function, int batsCount, Compartment range) : base()
+        public BatAlgorithm(Function function, int batsCount, List<Compartment> ranges)
         {
             this.randomGenerator = new LineRandom();
             this.frequency = new Compartment();
-            this.range = range;
+            this.range = new List<Compartment>(ranges);
             this.function = function;
             this.batsCount = batsCount;
+            this.canIEnditerator = 0;
             this.alpha = 0.9;
             this.gamma = 0.9;
             this.frequency.Min = 0;
             this.frequency.Max = 10;
             this.AcctualIteration = 1;
 
-            this.bats = CreateAllBats();
+            this.bats = new List<Bat>();
         }
 
-        private List<Bat> CreateAllBats()
+        public BatAlgorithm()
         {
-            List<Bat> result = new List<Bat>();
+            this.randomGenerator = new LineRandom();
+            this.frequency = new Compartment();
+            this.range = new List<Compartment>();
+            this.function = null;
+            this.batsCount = 0;
+            this.canIEnditerator = 0;
+            this.alpha = 0.9;
+            this.gamma = 0.9;
+            this.frequency.Min = 0;
+            this.frequency.Max = 10;
+            this.AcctualIteration = 1;
+
+            this.bats = new List<Bat>();
+        }
+
+        private void CreateAllBats()
+        {
             for (int i = 0; i < this.batsCount; i++)
             {
                 List<double> arguments = new List<double>();
                 for (int j = 0; j < this.function.ArgumentsSymbol.Count; j++)
                 {
-                    arguments.Add(this.randomGenerator.NextDouble(this.range.Min, this.range.Max));
+                    arguments.Add(this.randomGenerator.NextDouble(this.range[j].Min, this.range[j].Max));
                 }
                 this.bats.Add(new Bat(arguments));
 
@@ -112,10 +131,9 @@ namespace HeuristicAlgorithms
                 }
                 this.bats[this.bats.Count - 1].Fitness = fitness;
             }
-            return result;
         }
 
-        public bool NextIteration()
+        public bool NextIteration(out bool isDone)
         {
             for (int i = 0; i < this.batsCount; i++)
             {
@@ -123,7 +141,7 @@ namespace HeuristicAlgorithms
                 {
                     this.bats[i].Frequency = this.frequency.Min + (this.frequency.Max - this.frequency.Min) * this.randomGenerator.NextDouble();
 
-                    this.bats[i].Velocity.Values[j] = (this.bats[i].Position.Values[j] - this.bats.Max().Position.Values[j]) * this.bats[i].Frequency * 0.1;
+                    this.bats[i].Velocity.Values[j] = (this.bats[i].Position.Values[j] - this.bats.Min().Position.Values[j]) * this.bats[i].Frequency * 0.1;
                     this.bats[i].Position.Values[j] = this.bats[i].Position.Values[j] - this.bats[i].Velocity.Values[j];
                 }
                 double fitness = 0;
@@ -134,6 +152,7 @@ namespace HeuristicAlgorithms
                 catch (Exception e)
                 {
                     DebugInfo.Show(e.Message);
+                    isDone = false;
                     return false;
                 }
                 this.bats[i].Fitness = fitness;
@@ -149,16 +168,18 @@ namespace HeuristicAlgorithms
                     catch (Exception e)
                     {
                         DebugInfo.Show(e.Message);
+                        isDone = false;
                         return false;
                     }
 
                     try
                     {
-                        gloabBestFitness = this.function.Evaluate(this.bats.Max().Position.Values);
+                        gloabBestFitness = this.function.Evaluate(this.bats.Min().Position.Values);
                     }
                     catch (Exception e)
                     {
                         DebugInfo.Show(e.Message);
+                        isDone = false;
                         return false;
                     }
 
@@ -172,7 +193,7 @@ namespace HeuristicAlgorithms
 
             }
 
-            if (this.randomGenerator.NextDouble() > this.bats.Max().RateOfImpulses)
+            if (this.randomGenerator.NextDouble() > this.bats.Min().RateOfImpulses)
             {
                 double sumOfAudibility = 0;
                 double averageAudibility;
@@ -195,33 +216,111 @@ namespace HeuristicAlgorithms
                         random = this.randomGenerator.NextDouble();
                     }
 
-                    this.bats.Max().Position.Values[i] += random * averageAudibility;
+                    this.bats.Min().Position.Values[i] += random * averageAudibility;
                 }
-                this.bats.Max().Fitness = this.function.Evaluate(this.bats.Max().Position.Values);
-            }
 
+                double lastBestFitness = this.bats.Min().Fitness;
+                this.bats.Min().Fitness = this.function.Evaluate(this.bats.Min().Position.Values);
+
+                if (Math.Abs(lastBestFitness - this.bats.Min().Fitness) < 0.01)
+                {
+                    this.canIEnditerator++;
+                    if(this.canIEnditerator == 20)
+                    {
+                        isDone = true;
+                        return true;
+                    }
+                }
+                else
+                {
+                    this.canIEnditerator = 0;
+                }
+            }
+            if(this.AcctualIteration > (int.MaxValue-5))
+            {
+                isDone = true;
+                return true;
+            }
             this.AcctualIteration++;
+            isDone = false;
             return true;
         }
 
-        public bool StartAlgorithm()
+        public void DeepReset(Function function, int agentsCount, List<Compartment> ranges)
         {
-            throw new NotImplementedException();
-        }
+            this.range = new List<Compartment>(ranges);
+            this.function = function;
+            this.batsCount = agentsCount;
+            this.AcctualIteration = 1;
+            this.canIEnditerator = 0;
 
-        public bool EndAlgorithm()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ResetAlgorithm()
-        {
-            throw new NotImplementedException();
+            this.CreateAllBats();
         }
 
         public Vector GenerateBestValue()
         {
-            throw new NotImplementedException();
+            Vector result = new Vector(this.function.ArgumentsSymbol.Count);
+            while(true)
+            {
+                bool status;
+                if(!this.NextIteration(out status))
+                {
+                    throw new Exception();
+                }
+                else
+                {
+                    if(status)
+                    {
+                        result = this.bats.Min().Position;
+                        break;
+                    }
+                }
+            }
+
+            this.Reset();
+            return result;
+        }
+
+        public void Reset()
+        {
+            this.AcctualIteration = 1;
+            this.canIEnditerator = 0;
+
+            this.CreateAllBats();
+        }
+
+        public void SetParameters(Function function, int agentsCount, List<Compartment> ranges)
+        {
+            this.function = function;
+            this.batsCount = agentsCount;
+            this.range = new List<Compartment>(ranges);
+
+            this.CreateAllBats();
+        }
+
+        public async Task<Vector> GenerateBestValueAsync()
+        {
+            Vector result = new Vector(this.function.ArgumentsSymbol.Count);
+            while (true)
+            {
+                bool status = true;
+                bool isNotDirty = await Task.Run(() => this.NextIteration(out status));
+                if (!isNotDirty)
+                {
+                    throw new Exception();
+                }
+                else
+                {
+                    if (status)
+                    {
+                        result = this.bats.Min().Position;
+                        break;
+                    }
+                }
+            }
+
+            this.Reset();
+            return result;
         }
     }
 }

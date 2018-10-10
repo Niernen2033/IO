@@ -9,10 +9,11 @@ namespace HeuristicAlgorithms
 {
     interface IHeuristicAlgorithm
     {
-        bool StartAlgorithm();
-        bool EndAlgorithm();
-        bool NextIteration();
-        void ResetAlgorithm();
+        bool NextIteration(out bool isDone);
+        void DeepReset(Function function, int agentsCount, List<Compartment> ranges);
+        void Reset();
+        void SetParameters(Function function, int agentsCount, List<Compartment> ranges);
         Vector GenerateBestValue();
+        Task<Vector> GenerateBestValueAsync();
     }
 }
