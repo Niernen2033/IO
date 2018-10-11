@@ -12,6 +12,11 @@ namespace OptimizationGlobals
     {
         public List<double> Values { get; set; }
 
+        public Vector()
+        {
+            this.Values = new List<double>();
+        }
+
         public Vector(int size)
         {
             this.Values = new List<double>();

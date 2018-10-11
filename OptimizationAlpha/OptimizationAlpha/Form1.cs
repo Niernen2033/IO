@@ -23,19 +23,24 @@ namespace OptimizationAlpha
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            List<string> arguments = new List<string>() { "x", "y" };
+            //DebugInfo.SetState(true);
+            List<string> arguments = new List<string>() { "x", "y", "z" };
             Compartment rangeX = new Compartment(-5, 5);
             Compartment rangeY = new Compartment(-5, 5);
-            List<Compartment> ranges = new List<Compartment>() { rangeX, rangeY };
-            Function function = new Function("-Math.Cos(x)*Math.Cos(x)*Math.Exp(-Math.Pow((x-3.14),2)-Math.Pow((y-3.14),2))", arguments);
-            this.heuristicAlgorithms.BatAlgorithm.SetParameters(function, 40, ranges);
-            Vector result = await this.heuristicAlgorithms.BatAlgorithm.GenerateBestValueAsync();
+            Compartment rangeZ = new Compartment(-5, 5);
+            List<Compartment> ranges = new List<Compartment>() { rangeX, rangeY, rangeZ };
+            Function function = new Function("Math.Cos(x)+y*y+Math.Sin(z)", arguments);
+            this.heuristicAlgorithms.BatAlgorithm.SetNewAndReset(function, 40, ranges);
+            this.button1.Enabled = false;
+            FitnessPoint result = await this.heuristicAlgorithms.BatAlgorithm.GenerateBestValueAsync();
             string res = string.Empty;
-            for(int i=0; i<result.Values.Count; i++)
+            for(int i=0; i<result.Axis.Values.Count; i++)
             {
-                res += (Math.Round(result.Values[i], 5, MidpointRounding.AwayFromZero)).ToString() + " | ";
+                res += (Math.Round(result.Axis.Values[i], 5, MidpointRounding.AwayFromZero)).ToString() + " | ";
             }
+            res += " = " + Math.Round(result.Fitness, 5, MidpointRounding.AwayFromZero);
             this.label1.Text = res;
+            this.button1.Enabled = true;
         }
     }
 }

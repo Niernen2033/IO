@@ -27,7 +27,7 @@ namespace OptimizationGlobals
         {
             if(argumentsValues.Count != this.argumentsSymbol.Count)
             {
-                throw new Exception("Too little or too much arguments");
+                throw new Exception();
             }
 
             Dictionary<string, double> argument_value = new Dictionary<string, double>();
@@ -41,9 +41,9 @@ namespace OptimizationGlobals
             {
                 result = Eval.Execute<double>(this.FunctionExpression, argument_value);
             }
-            catch (Exception e)
+            catch
             {
-                throw new Exception(e.Message);
+                throw new Exception();
             }
 
             return result;
