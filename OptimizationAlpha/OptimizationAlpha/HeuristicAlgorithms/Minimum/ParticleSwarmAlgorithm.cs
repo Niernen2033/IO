@@ -57,13 +57,14 @@ namespace HeuristicAlgorithms
         //Constructors====================================================================
         public ParticleSwarmAlgorithm(Function function, int particlesCount, List<Compartment> ranges) : base(function, particlesCount, ranges)
         {
+            this.algorithmType = AlgorithmType.Minimum;
             this.particles = new List<Particle>();
             this.CreateAllPoints();
         }
 
         public ParticleSwarmAlgorithm() : base()
         {
-
+            this.algorithmType = AlgorithmType.Minimum;
             this.particles = new List<Particle>();
         }
 

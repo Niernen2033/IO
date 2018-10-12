@@ -54,6 +54,7 @@ namespace HeuristicAlgorithms
         //Constructors====================================================================
         public SimulatedAnnealingAlgorithm(Function function, int particlesCount, List<Compartment> ranges) : base(function, particlesCount, ranges)
         {
+            this.algorithmType = AlgorithmType.Minimum;
             this.T = 100;
             this.SAobjects = new List<SAobject>();
             this.CreateAllPoints();
@@ -61,6 +62,7 @@ namespace HeuristicAlgorithms
 
         public SimulatedAnnealingAlgorithm() : base()
         {
+            this.algorithmType = AlgorithmType.Minimum;
             this.T = 100;
             this.SAobjects = new List<SAobject>();
         }

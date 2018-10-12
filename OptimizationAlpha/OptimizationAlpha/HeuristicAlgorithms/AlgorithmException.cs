@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace HeuristicAlgorithms
 {
-    enum AlgorithmExceptionType { ParametersNotSeted, FunctionNotExecuted, DifferenceArguments }
+    enum AlgorithmExceptionType { ParametersNotSeted, FunctionNotExecuted, DifferenceArguments, FunctionNotSeted, WrongParametersArguments, BadRanges }
 
     class AlgorithmException : Exception
     {

@@ -60,6 +60,7 @@ namespace HeuristicAlgorithms
         //Constructors====================================================================
         public ChargedSystemSearchAlgorithm(Function function, int particlesCount, List<Compartment> ranges) : base(function, particlesCount, ranges)
         {
+            this.algorithmType = AlgorithmType.Maximum;
             this.particleDiameter = 1;
 
             this.particles = new List<Particle>();
@@ -68,6 +69,7 @@ namespace HeuristicAlgorithms
 
         public ChargedSystemSearchAlgorithm() : base()
         {
+            this.algorithmType = AlgorithmType.Maximum;
             this.particleDiameter = 1;
             this.particles = new List<Particle>();
         }

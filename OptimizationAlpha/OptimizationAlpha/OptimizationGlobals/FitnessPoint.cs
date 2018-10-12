@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OptimizationGlobals
 {
-    class FitnessPoint
+    class FitnessPoint : IComparable<FitnessPoint>
     {
         public double Fitness { get; set; }
         public Vector Axis { get; set; }
@@ -22,5 +22,22 @@ namespace OptimizationGlobals
             this.Axis = new Vector(values);
             this.Fitness = fitness;
         }
+
+        public FitnessPoint(ref FitnessPoint fitnessPoint)
+        {
+            Vector myVector = this.Axis;
+            this.Axis = new Vector(ref myVector);
+            this.Fitness = fitnessPoint.Fitness;
+        }
+        public int CompareTo(FitnessPoint other)
+        {
+            if (this.Fitness > other.Fitness)
+                return 1;
+            else if (this.Fitness < other.Fitness)
+                return -1;
+            else
+                return 0;
+        }
+
     }
 }

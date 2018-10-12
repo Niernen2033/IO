@@ -31,10 +31,9 @@ namespace OptimizationAlpha
             List<Compartment> ranges = new List<Compartment>() { rangeX, rangeY };
             //(Math.Sqrt(x*x)+Math.Sqrt(y*y))*Math.Exp((-0.0625)*(x*x +y*y))
             //-(Math.Sin(x)+y*y+Math.Cos(z))
-            Function function = new Function("(Math.Sqrt(x*x)+Math.Sqrt(y*y))*Math.Exp((-0.0625)*(x*x +y*y))", arguments);
-            this.heuristicAlgorithms.ChargedSystemSearchAlgorithm.SetNewAndReset(function, 40, ranges);
+            string function = "(Sqrt(x*x)+Sqrt(y*y))*Exp((-0.0625)*(x*x +y*y))";
             this.button1.Enabled = false;
-            FitnessPoint result = await this.heuristicAlgorithms.ChargedSystemSearchAlgorithm.GenerateBestValueAsync();
+            FitnessPoint result = await this.heuristicAlgorithms.GetOptimalPointAsync(AlgorithmType.Maximum, function, arguments, ranges);
             string res = string.Empty;
             for(int i=0; i<result.Axis.Values.Count; i++)
             {

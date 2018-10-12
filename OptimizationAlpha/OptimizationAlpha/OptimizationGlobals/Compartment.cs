@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HeuristicAlgorithms;
 
 namespace OptimizationGlobals
 {
@@ -13,6 +14,10 @@ namespace OptimizationGlobals
 
         public Compartment(double min, double max)
         {
+            if(min > max)
+            {
+                throw new AlgorithmException(AlgorithmExceptionType.BadRanges);
+            }
             this.Min = min;
             this.Max = max;
         }

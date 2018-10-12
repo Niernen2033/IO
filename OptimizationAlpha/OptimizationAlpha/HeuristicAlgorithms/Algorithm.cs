@@ -9,6 +9,7 @@ namespace HeuristicAlgorithms
 {
     abstract class Algorithm
     {
+        protected AlgorithmType algorithmType;
         protected Function function;
         protected List<Compartment> ranges;
         protected int pointsCount;
@@ -17,9 +18,11 @@ namespace HeuristicAlgorithms
         protected int acctualIteration;
 
         public int AcctualIteration { get { return this.acctualIteration; } }
+        public AlgorithmType AlgorithmType { get { return this.algorithmType; } }
 
         protected Algorithm(Function function, int pointsCount, List<Compartment> ranges)
         {
+            this.algorithmType = AlgorithmType.None;
             this.randomGenerator = new LineRandom();
             this.canIEndIterator = 0;
             this.acctualIteration = 1;
@@ -36,6 +39,7 @@ namespace HeuristicAlgorithms
 
         protected Algorithm()
         {
+            this.algorithmType = AlgorithmType.None;
             this.randomGenerator = new LineRandom();
             this.canIEndIterator = 0;
             this.acctualIteration = 1;

@@ -69,6 +69,7 @@ namespace HeuristicAlgorithms
         //Constructors====================================================================
         public BatAlgorithm(Function function, int batsCount, List<Compartment> ranges) : base(function,batsCount,ranges)
         {
+            this.algorithmType = AlgorithmType.Minimum;
             this.frequency = new Compartment();
             this.frequency.Min = 0;
             this.frequency.Max = 10;
@@ -79,6 +80,7 @@ namespace HeuristicAlgorithms
 
         public BatAlgorithm() : base()
         {
+            this.algorithmType = AlgorithmType.Minimum;
             this.frequency = new Compartment();
             this.frequency.Min = 0;
             this.frequency.Max = 10;

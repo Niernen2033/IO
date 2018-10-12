@@ -55,7 +55,7 @@ namespace HeuristicAlgorithms
         //Constructors====================================================================
         public FireflyAlgorithm(Function function, int particlesCount, List<Compartment> ranges) : base(function, particlesCount, ranges)
         {
-
+            this.algorithmType = AlgorithmType.Maximum;
             this.fireflys = new List<Firefly>();
             this.absorptionCoefficientOfLight = 1;
             this.alfa = 0.2;
@@ -64,6 +64,7 @@ namespace HeuristicAlgorithms
 
         public FireflyAlgorithm() : base()
         {
+            this.algorithmType = AlgorithmType.Maximum;
             this.absorptionCoefficientOfLight = 1;
             this.alfa = 0.2;
             this.fireflys = new List<Firefly>();

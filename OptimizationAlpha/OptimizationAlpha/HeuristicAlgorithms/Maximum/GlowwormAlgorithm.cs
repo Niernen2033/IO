@@ -65,7 +65,7 @@ namespace HeuristicAlgorithms
         //Constructors====================================================================
         public GlowwormAlgorithm(Function function, int particlesCount, List<Compartment> ranges) : base(function, particlesCount, ranges)
         {
-
+            this.algorithmType = AlgorithmType.Maximum;
             this.glowworms = new List<Glowworm>();
             this.s = new List<double>();
             this.r_max = new List<double>();
@@ -86,6 +86,7 @@ namespace HeuristicAlgorithms
 
         public GlowwormAlgorithm() : base()
         {
+            this.algorithmType = AlgorithmType.Maximum;
             this.glowworms = new List<Glowworm>();
             this.s = new List<double>();
             this.r_max = new List<double>();
