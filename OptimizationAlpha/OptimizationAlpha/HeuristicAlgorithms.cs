@@ -14,6 +14,7 @@ namespace OptimizationAlpha
         public SimulatedAnnealingAlgorithm SimulatedAnnealingAlgorithm { get; private set; }
         public FireflyAlgorithm FireflyAlgorithm { get; private set; }
         public GlowwormAlgorithm GlowwormAlgorithm { get; private set; }
+        public ChargedSystemSearchAlgorithm ChargedSystemSearchAlgorithm { get; private set; }
 
         public HeuristicAlgorithms()
         {
@@ -22,6 +23,7 @@ namespace OptimizationAlpha
             this.SimulatedAnnealingAlgorithm = new SimulatedAnnealingAlgorithm();
             this.FireflyAlgorithm = new FireflyAlgorithm();
             this.GlowwormAlgorithm = new GlowwormAlgorithm();
+            this.ChargedSystemSearchAlgorithm = new ChargedSystemSearchAlgorithm();
         }
     }
 }

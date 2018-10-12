@@ -250,7 +250,7 @@ namespace HeuristicAlgorithms
             {
                 if (!this.NextIteration())
                 {
-                    result = this.fireflys.Min().Position;
+                    result = this.fireflys.Max().Position;
                     break;
                 }
             }
@@ -272,7 +272,7 @@ namespace HeuristicAlgorithms
                 bool isNotEnd = await Task.Run(() => this.NextIteration());
                 if (!isNotEnd)
                 {
-                    result = this.fireflys.Min().Position;
+                    result = this.fireflys.Max().Position;
                     break;
                 }
             }

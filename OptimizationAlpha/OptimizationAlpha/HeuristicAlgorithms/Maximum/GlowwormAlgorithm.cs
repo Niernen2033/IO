@@ -14,7 +14,7 @@ namespace HeuristicAlgorithms
         public class Glowworm : IComparable<Glowworm>
         {
             public FitnessPoint Position { get; set; }
-            public double SensorRange { get; set; }
+            public List<double> SensorRange { get; set; }
             public double Luciferin { get; set; }
             public double MoveProbability { get; set; }
 
@@ -26,7 +26,7 @@ namespace HeuristicAlgorithms
                 this.randomGenerator = new LineRandom();
 
                 this.Position = new FitnessPoint(arguments.ToList(), 0);
-                this.SensorRange = 0;
+                this.SensorRange = new List<double>();
                 this.Luciferin = 0;
                 this.MoveProbability = 0;
             }
@@ -36,7 +36,7 @@ namespace HeuristicAlgorithms
                 this.randomGenerator = new LineRandom();
 
                 this.Position = new FitnessPoint(arguments, 0);
-                this.SensorRange = 0;
+                this.SensorRange = new List<double>();
                 this.Luciferin = 0;
                 this.MoveProbability = 0;
             }
@@ -75,6 +75,12 @@ namespace HeuristicAlgorithms
             this.gamma = 0.6;
             this.n_t = 5;
 
+            for (int i = 0; i < this.ranges.Count; i++)
+            {
+                this.r_max.Add((2 * Math.Abs(this.ranges[i].Max - this.ranges[i].Min)) / (double)3);
+                this.s.Add(Math.Abs(this.ranges[i].Max - this.ranges[i].Min) / (double)(Math.Pow(Math.Abs(this.ranges[i].Max - this.ranges[i].Min), 2) + 2));
+            }
+
             this.CreateAllPoints();
         }
 
@@ -108,7 +114,10 @@ namespace HeuristicAlgorithms
                         throw new AlgorithmException(AlgorithmExceptionType.FunctionNotExecuted);
                     }
 
-                    this.glowworms[index].SensorRange = (2 * Math.Abs(this.ranges[j].Max - this.ranges[j].Min)) / (double)4;
+                    for (int k = 0; k < this.ranges.Count; k++)
+                    {
+                        this.glowworms[index].SensorRange[k] = (2 * Math.Abs(this.ranges[k].Max - this.ranges[k].Min)) / (double)4;
+                    }
                     break;
                 }
             }
@@ -125,12 +134,10 @@ namespace HeuristicAlgorithms
                 }
                 this.glowworms.Add(new Glowworm(arguments));
                 this.glowworms[this.glowworms.Count - 1].Luciferin = 5;
-                this.glowworms[this.glowworms.Count - 1].SensorRange = (2 * Math.Abs(this.ranges[0].Max - this.ranges[0].Min)) / (double)4;
 
                 for (int j = 0; j < this.function.ArgumentsSymbol.Count; j++)
                 {
-                    this.r_max.Add((2 * Math.Abs(this.ranges[j].Max - this.ranges[j].Min)) / (double)3);
-                    this.s.Add(Math.Abs(this.ranges[j].Max - this.ranges[j].Min) / (double)(Math.Pow(Math.Abs(this.ranges[j].Max - this.ranges[j].Min), 2) + 2));
+                    this.glowworms[this.glowworms.Count - 1].SensorRange.Add((2 * Math.Abs(this.ranges[j].Max - this.ranges[j].Min)) / (double)4);
                 }
 
                 try
@@ -202,6 +209,12 @@ namespace HeuristicAlgorithms
                 this.r_max.Clear();
                 this.s.Clear();
 
+                for (int i = 0; i < this.ranges.Count; i++)
+                {
+                    this.r_max.Add((2 * Math.Abs(this.ranges[i].Max - this.ranges[i].Min)) / (double)3);
+                    this.s.Add(Math.Abs(this.ranges[i].Max - this.ranges[i].Min) / (double)(Math.Pow(Math.Abs(this.ranges[i].Max - this.ranges[i].Min), 2) + 2));
+                }
+
                 this.acctualIteration = 1;
                 this.canIEndIterator = 0;
                 this.glowworms.Clear();
@@ -221,7 +234,7 @@ namespace HeuristicAlgorithms
             {
                 if (!this.NextIteration())
                 {
-                    result = this.glowworms.Min().Position;
+                    result = this.glowworms.Max().Position;
                     break;
                 }
             }
@@ -243,7 +256,7 @@ namespace HeuristicAlgorithms
                 bool isNotEnd = await Task.Run(() => this.NextIteration());
                 if (!isNotEnd)
                 {
-                    result = this.glowworms.Min().Position;
+                    result = this.glowworms.Max().Position;
                     break;
                 }
             }
@@ -272,11 +285,20 @@ namespace HeuristicAlgorithms
                     {
                         double d = this.DistanceBetweenGlowworms(this.glowworms[i], this.glowworms[j]);
 
-                        if ((d < this.glowworms[i].SensorRange)
-                            && (this.glowworms[i].Luciferin < this.glowworms[j].Luciferin))
+                        bool ifIFindNeighbour = false;
+                        for (int k = 0; k < this.ranges.Count; k++)
                         {
-                            i_neighbours.Add(this.glowworms[j]);
-                            i_neighbours_luciferin_sum += (this.glowworms[j].Luciferin - this.glowworms[i].Luciferin);
+                            if ((d < this.glowworms[i].SensorRange[k])
+                                && (this.glowworms[i].Luciferin < this.glowworms[j].Luciferin))
+                            {
+                                i_neighbours.Add(this.glowworms[j]);
+                                i_neighbours_luciferin_sum += (this.glowworms[j].Luciferin - this.glowworms[i].Luciferin);
+                                ifIFindNeighbour = true;
+                                break;
+                            }
+                        }
+                        if (ifIFindNeighbour)
+                        {
                             break;
                         }
                     }
@@ -295,7 +317,7 @@ namespace HeuristicAlgorithms
                     {
                         double i_j_difference = this.glowworms[i_to_j_glowworm_index].Position.Axis.Values[j] - this.glowworms[i].Position.Axis.Values[j];
                         this.glowworms[i].Position.Axis.Values[j] += this.s[j] * (i_j_difference / Math.Abs(i_j_difference));
-                        this.glowworms[i].SensorRange = Math.Min(this.r_max[j], Math.Max(0, this.glowworms[i].SensorRange + this.beta * (this.n_t - Math.Abs(i_neighbours.Count))));
+                        this.glowworms[i].SensorRange[j] = Math.Min(this.r_max[j], Math.Max(0, this.glowworms[i].SensorRange[j] + this.beta * (this.n_t - Math.Abs(i_neighbours.Count))));
                     }
 
                     this.ResetIfOutOffRange(i);
