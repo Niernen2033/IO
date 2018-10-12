@@ -60,8 +60,8 @@ namespace HeuristicAlgorithms
         }
 
         private List<Bat> bats;
-        private double alpha;
-        private double gamma;
+        private const double alpha = 0.9;
+        private const double gamma = 0.9;
         private Compartment frequency;
 
         public ReadOnlyCollection<Bat> Bats { get { return this.bats.AsReadOnly(); } }
@@ -70,8 +70,6 @@ namespace HeuristicAlgorithms
         public BatAlgorithm(Function function, int batsCount, List<Compartment> ranges) : base(function,batsCount,ranges)
         {
             this.frequency = new Compartment();
-            this.alpha = 0.9;
-            this.gamma = 0.9;
             this.frequency.Min = 0;
             this.frequency.Max = 10;
 
@@ -82,8 +80,6 @@ namespace HeuristicAlgorithms
         public BatAlgorithm() : base()
         {
             this.frequency = new Compartment();
-            this.alpha = 0.9;
-            this.gamma = 0.9;
             this.frequency.Min = 0;
             this.frequency.Max = 10;
 
@@ -91,6 +87,31 @@ namespace HeuristicAlgorithms
         }
 
         //Functions====================================================================
+        private void ResetIfOutOffRange(int index)
+        {
+            for (int j = 0; j < this.ranges.Count; j++)
+            {
+                if (this.bats[index].Position.Axis.Values[j] > this.ranges[j].Max
+                    || this.bats[index].Position.Axis.Values[j] < this.ranges[j].Min)
+                {
+                    List<double> arguments = new List<double>();
+                    for (int k = 0; k < this.function.ArgumentsSymbol.Count; k++)
+                    {
+                        arguments.Add(this.randomGenerator.NextDouble(this.ranges[k].Min, this.ranges[k].Max));
+                    }
+                    this.bats[index].Position.Axis.Values = arguments;
+                    try
+                    {
+                        this.bats[index].Position.Fitness = this.function.Evaluate(this.bats[index].Position.Axis.Values);
+                    }
+                    catch
+                    {
+                        throw new AlgorithmException(AlgorithmExceptionType.FunctionNotExecuted);
+                    }
+                    break;
+                }
+            }
+        }
 
         private void CreateAllPoints()
         {
@@ -103,16 +124,14 @@ namespace HeuristicAlgorithms
                 }
                 this.bats.Add(new Bat(arguments));
 
-                double fitness = 0;
                 try
                 {
-                    fitness = this.function.Evaluate(this.bats[i].Position.Axis.Values);
+                    this.bats[this.bats.Count - 1].Position.Fitness = this.function.Evaluate(this.bats[i].Position.Axis.Values);
                 }
                 catch
                 {
                     throw new AlgorithmException(AlgorithmExceptionType.FunctionNotExecuted);
                 }
-                this.bats[this.bats.Count - 1].Position.Fitness = fitness;
             }
         }
 
@@ -132,16 +151,17 @@ namespace HeuristicAlgorithms
                     this.bats[i].Velocity.Values[j] = (this.bats[i].Position.Axis.Values[j] - this.bats.Min().Position.Axis.Values[j]) * this.bats[i].Frequency * 0.1;
                     this.bats[i].Position.Axis.Values[j] = this.bats[i].Position.Axis.Values[j] - this.bats[i].Velocity.Values[j];
                 }
-                double fitness = 0;
+
                 try
                 {
-                    fitness = this.function.Evaluate(this.bats[i].Position.Axis.Values);
+                    this.bats[i].Position.Fitness = this.function.Evaluate(this.bats[i].Position.Axis.Values);
                 }
                 catch
                 {
                     throw new AlgorithmException(AlgorithmExceptionType.FunctionNotExecuted);
                 }
-                this.bats[i].Position.Fitness = fitness;
+
+                this.ResetIfOutOffRange(i);
 
                 if (this.randomGenerator.NextDouble() < this.bats[i].Audibility)
                 {
@@ -169,8 +189,8 @@ namespace HeuristicAlgorithms
 
                     if (iterationFitness < gloabBestFitness)
                     {
-                        this.bats[i].RateOfImpulses = this.bats[i].RateOfImpulses * (1 - Math.Exp((-1) * this.gamma * this.acctualIteration));
-                        this.bats[i].Audibility = this.alpha * this.bats[i].Audibility;
+                        this.bats[i].RateOfImpulses = this.bats[i].RateOfImpulses * (1 - Math.Exp((-1) * gamma * this.acctualIteration));
+                        this.bats[i].Audibility = alpha * this.bats[i].Audibility;
                     }
                 }
 

@@ -24,15 +24,15 @@ namespace OptimizationAlpha
         private async void button1_Click(object sender, EventArgs e)
         {
             //DebugInfo.SetState(true);
-            List<string> arguments = new List<string>() { "x", "y", "z" };
+            List<string> arguments = new List<string>() { "x", "y" };
             Compartment rangeX = new Compartment(-5, 5);
             Compartment rangeY = new Compartment(-5, 5);
             Compartment rangeZ = new Compartment(-5, 5);
-            List<Compartment> ranges = new List<Compartment>() { rangeX, rangeY, rangeZ };
-            Function function = new Function("Math.Cos(x)+y*y+Math.Sin(z)", arguments);
-            this.heuristicAlgorithms.BatAlgorithm.SetNewAndReset(function, 40, ranges);
+            List<Compartment> ranges = new List<Compartment>() { rangeX, rangeY };
+            Function function = new Function("(Math.Sqrt(x*x)+Math.Sqrt(y*y))*Math.Exp((-0.0625)*(x*x +y*y))", arguments);
+            this.heuristicAlgorithms.GlowwormAlgorithm.SetNewAndReset(function, 40, ranges);
             this.button1.Enabled = false;
-            FitnessPoint result = await this.heuristicAlgorithms.BatAlgorithm.GenerateBestValueAsync();
+            FitnessPoint result = await this.heuristicAlgorithms.GlowwormAlgorithm.GenerateBestValueAsync();
             string res = string.Empty;
             for(int i=0; i<result.Axis.Values.Count; i++)
             {
