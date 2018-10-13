@@ -175,7 +175,7 @@ namespace HeuristicAlgorithms
                     }
                     catch (Exception e)
                     {
-                        DebugInfo.Show(e.Message);
+                        Debug.Show(e.Message);
                         throw new AlgorithmException(AlgorithmExceptionType.FunctionNotExecuted);
                     }
 

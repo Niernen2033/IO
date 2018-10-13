@@ -75,7 +75,6 @@ namespace OptimizationAlpha
             }
 
             Function function = new Function(functionExpression, argumentsSymbols);
-            Function reverse_function = new Function("-(" + functionExpression + ")", argumentsSymbols);
 
             int agentsCount = 0;
             for (int i = 0; i < ranges.Count; i++)
@@ -84,13 +83,9 @@ namespace OptimizationAlpha
             }
             for (int i = 0; i < this.algorithms.Count; i++)
             {
-                if (this.algorithms[i].AlgorithmType == AlgorithmType.Maximum)
+                if (this.algorithms[i].AlgorithmType == type)
                 {
                     this.algorithms[i].SetNewAndReset(function, agentsCount, ranges);
-                }
-                else if (this.algorithms[i].AlgorithmType == AlgorithmType.Minimum)
-                {
-                    this.algorithms[i].SetNewAndReset(reverse_function, agentsCount, ranges);
                 }
             }
 
@@ -99,8 +94,11 @@ namespace OptimizationAlpha
             {
                 for (int j = 0; j < this.algorithms.Count; j++)
                 {
-                    FitnessPoint best_point = this.algorithms[j].GenerateBestValue();
-                    bestPoints.Add(best_point);
+                    if (this.algorithms[j].AlgorithmType == type)
+                    {
+                        FitnessPoint best_point = this.algorithms[j].GenerateBestValue();
+                        bestPoints.Add(best_point);
+                    }
                 }
             }
 
@@ -132,7 +130,6 @@ namespace OptimizationAlpha
             }
 
             Function function = new Function(functionExpression, argumentsSymbols);
-            Function reverse_function = new Function("-(" + functionExpression + ")", argumentsSymbols);
 
             int agentsCount = 0;
             for(int i=0; i<ranges.Count; i++)
@@ -141,13 +138,9 @@ namespace OptimizationAlpha
             }
             for (int i = 0; i < this.algorithms.Count; i++)
             {
-                if (this.algorithms[i].AlgorithmType == AlgorithmType.Maximum)
+                if (this.algorithms[i].AlgorithmType == type)
                 {
                     this.algorithms[i].SetNewAndReset(function, agentsCount, ranges);
-                }
-                else if (this.algorithms[i].AlgorithmType == AlgorithmType.Minimum)
-                {
-                    this.algorithms[i].SetNewAndReset(reverse_function, agentsCount, ranges);
                 }
             }
 
@@ -156,8 +149,11 @@ namespace OptimizationAlpha
             {
                 for (int j = 0; j < this.algorithms.Count; j++)
                 {
-                    FitnessPoint best_point = await this.algorithms[j].GenerateBestValueAsync();
-                    bestPoints.Add(best_point);
+                    if (this.algorithms[j].AlgorithmType == type)
+                    {
+                        FitnessPoint best_point = await this.algorithms[j].GenerateBestValueAsync();
+                        bestPoints.Add(best_point);
+                    }
                 }
             }
 
@@ -189,7 +185,6 @@ namespace OptimizationAlpha
             }
 
             Function function = new Function(functionExpression, argumentsSymbols);
-            Function reverse_function = new Function("-(" + functionExpression + ")", argumentsSymbols);
 
             int agentsCount = 0;
             for (int i = 0; i < ranges.Count; i++)
@@ -198,27 +193,26 @@ namespace OptimizationAlpha
             }
             for (int i = 0; i < this.algorithms.Count; i++)
             {
-                if (this.algorithms[i].AlgorithmType == AlgorithmType.Maximum)
+                if (this.algorithms[i].AlgorithmType == type)
                 {
                     this.algorithms[i].SetNewAndReset(function, agentsCount, ranges);
                 }
-                else if (this.algorithms[i].AlgorithmType == AlgorithmType.Minimum)
-                {
-                    this.algorithms[i].SetNewAndReset(reverse_function, agentsCount, ranges);
-                }
             }
 
-            List<FitnessPoint> result = new List<FitnessPoint>();
+            List<FitnessPoint> bestPoints = new List<FitnessPoint>();
             for (int i = 0; i < this.Iterations; i++)
             {
                 for (int j = 0; j < this.algorithms.Count; j++)
                 {
-                    FitnessPoint best_point = this.algorithms[j].GenerateBestValue();
-                    result.Add(best_point);
+                    if (this.algorithms[j].AlgorithmType == type)
+                    {
+                        FitnessPoint best_point = this.algorithms[j].GenerateBestValue();
+                        bestPoints.Add(best_point);
+                    }
                 }
             }
 
-            return result;
+            return bestPoints;
         }
 
         public async Task<List<FitnessPoint>> GetAllOptimalPointsAsync(AlgorithmType type, string functionExpression, List<string> argumentsSymbols, List<Compartment> ranges)
@@ -236,7 +230,6 @@ namespace OptimizationAlpha
             }
 
             Function function = new Function(functionExpression, argumentsSymbols);
-            Function reverse_function = new Function("-(" + functionExpression + ")", argumentsSymbols);
 
             int agentsCount = 0;
             for (int i = 0; i < ranges.Count; i++)
@@ -245,27 +238,26 @@ namespace OptimizationAlpha
             }
             for (int i = 0; i < this.algorithms.Count; i++)
             {
-                if (this.algorithms[i].AlgorithmType == AlgorithmType.Maximum)
+                if (this.algorithms[i].AlgorithmType == type)
                 {
                     this.algorithms[i].SetNewAndReset(function, agentsCount, ranges);
                 }
-                else if (this.algorithms[i].AlgorithmType == AlgorithmType.Minimum)
-                {
-                    this.algorithms[i].SetNewAndReset(reverse_function, agentsCount, ranges);
-                }
             }
 
-            List<FitnessPoint> result = new List<FitnessPoint>();
+            List<FitnessPoint> bestPoints = new List<FitnessPoint>();
             for (int i = 0; i < this.Iterations; i++)
             {
                 for (int j = 0; j < this.algorithms.Count; j++)
                 {
-                    FitnessPoint best_point = await this.algorithms[j].GenerateBestValueAsync();
-                    result.Add(best_point);
+                    if (this.algorithms[j].AlgorithmType == type)
+                    {
+                        FitnessPoint best_point = await this.algorithms[j].GenerateBestValueAsync();
+                        bestPoints.Add(best_point);
+                    }
                 }
             }
 
-            return result;
+            return bestPoints;
         }
     }
 }

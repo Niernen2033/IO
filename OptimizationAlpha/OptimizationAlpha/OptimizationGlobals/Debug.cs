@@ -7,21 +7,17 @@ using System.Windows.Forms;
 
 namespace OptimizationGlobals
 {
-    static class DebugInfo
+    static class Debug
     {
-        private static bool State = false;
+        public static bool DebugState { get; set; } = false;
+        public static bool TestState { get; set; } = false;
 
         public static void Show(string info)
         {
-            if (State == true)
+            if (DebugState == true)
             {
                 MessageBox.Show(info);
             }
-        }
-
-        public static void SetState(bool state)
-        {
-            State = state;
         }
     }
 }

@@ -7,7 +7,7 @@ using HeuristicAlgorithms;
 
 namespace OptimizationGlobals
 {
-    class Compartment
+    public class Compartment
     {
         public double Min { get; set; }
         public double Max { get; set; }

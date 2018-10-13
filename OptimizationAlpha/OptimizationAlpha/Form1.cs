@@ -24,14 +24,14 @@ namespace OptimizationAlpha
         private async void button1_Click(object sender, EventArgs e)
         {
             //DebugInfo.SetState(true);
-            List<string> arguments = new List<string>() { "x", "y"};
+            List<string> arguments = new List<string>() { "x" , "y" };
             Compartment rangeX = new Compartment(-5, 5);
             Compartment rangeY = new Compartment(-5, 5);
             Compartment rangeZ = new Compartment(-5, 5);
-            List<Compartment> ranges = new List<Compartment>() { rangeX, rangeY };
+            List<Compartment> ranges = new List<Compartment>() { rangeX , rangeY };
             //(Math.Sqrt(x*x)+Math.Sqrt(y*y))*Math.Exp((-0.0625)*(x*x +y*y))
             //-(Math.Sin(x)+y*y+Math.Cos(z))
-            string function = "(Sqrt(x*x)+Sqrt(y*y))*Exp((-0.0625)*(x*x +y*y))";
+            string function = "(Math.Sqrt(x*x)+Math.Sqrt(y*y))*Math.Exp((-0.0625)*(x*x +y*y))";
             this.button1.Enabled = false;
             FitnessPoint result = await this.heuristicAlgorithms.GetOptimalPointAsync(AlgorithmType.Maximum, function, arguments, ranges);
             string res = string.Empty;
