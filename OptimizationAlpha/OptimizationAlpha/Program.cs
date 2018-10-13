@@ -27,7 +27,7 @@ namespace OptimizationAlpha
                     Debug.TestState = true;
                 }
             }
-            Debug.TestState = true;
+            //Debug.TestState = true;
             if (!Debug.TestState)
             {
                 Application.EnableVisualStyles();
