@@ -38,6 +38,40 @@ namespace OptimizationTests
                         await BeginHeuristicAlgorithmsTest((HATestUnit)optionalData, logsBox);
                         break;
                     }
+                case 1:
+                    {
+                        BeginLagrangeInterpolationTest((LagrangeInterpolationTestUnit)optionalData, logsBox);
+                        break;
+                    }
+            }
+        }
+
+        private void BeginLagrangeInterpolationTest(LagrangeInterpolationTestUnit liTestUnit, ListBox logsBox)
+        {
+            Communication.LagrangeInterpolation lagrangeInterpolation = new Communication.LagrangeInterpolation();
+
+            for(int i=0; i<liTestUnit.FileToTest.Count; i++)
+            {
+                //petla przez wszystkie pliki
+                if(!lagrangeInterpolation.LoadFile(liTestUnit.FileToTest[i].Path, liTestUnit.FileToTest[i].FileType))
+                {
+                    //cos poszlo nie tak z wczytaniem pliku
+                }
+                else
+                {
+                    //wszystko ok
+                }
+                string function_expression;
+                string function_variables;
+
+                if(!lagrangeInterpolation.GenerateFunctionExpression(out function_expression, out function_variables))
+                {
+                    //cos poszlo nie tak z wygenerowaniem funkcji
+                }
+                else
+                {
+                    //wszystko ok
+                }
             }
         }
 
