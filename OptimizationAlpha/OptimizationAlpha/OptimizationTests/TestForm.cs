@@ -54,15 +54,31 @@ namespace OptimizationTests
 
                     if (filePath != string.Empty)
                     {
-                        HATestUnit hATestUnit = new HATestUnit();
-                        if (!XmlManager.Load<HATestUnit>(filePath, out hATestUnit))
+                        if (this.comboBox_allTests.SelectedIndex == 0)
                         {
-                            filePath = string.Empty;
+                            HATestUnit hATestUnit = new HATestUnit();
+                            if (!XmlManager.Load<HATestUnit>(filePath, out hATestUnit))
+                            {
+                                filePath = string.Empty;
+                            }
+                            else
+                            {
+                                this.button_beginTest.Enabled = false;
+                                this.tests.Begin(this.comboBox_allTests.SelectedIndex, this.listBox_testLogs, hATestUnit);
+                            }
                         }
-                        else
+                        else if (this.comboBox_allTests.SelectedIndex == 1)
                         {
-                            this.button_beginTest.Enabled = false;
-                            this.tests.Begin(this.comboBox_allTests.SelectedIndex, this.listBox_testLogs, hATestUnit);
+                            LagrangeInterpolationTestUnit liTestUnit = new LagrangeInterpolationTestUnit();
+                            if (!XmlManager.Load<LagrangeInterpolationTestUnit>(filePath, out liTestUnit))
+                            {
+                                filePath = string.Empty;
+                            }
+                            else
+                            {
+                                this.button_beginTest.Enabled = false;
+                                this.tests.Begin(this.comboBox_allTests.SelectedIndex, this.listBox_testLogs, liTestUnit);
+                            }
                         }
                     }
                 }

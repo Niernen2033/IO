@@ -50,6 +50,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communication\CommunicationException.cs" />
+    <Compile Include="Communication\LagrangeInterpolation.cs" />
     <Compile Include="HeuristicAlgorithms\Algorithm.cs" />
     <Compile Include="HeuristicAlgorithms\AlgorithmException.cs" />
     <Compile Include="HeuristicAlgorithms\Maximum\ChargedSystemSearchAlgorithm.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="OptimizationGlobals\LineRandom.cs" />
     <Compile Include="OptimizationGlobals\FitnessPoint.cs" />
     <Compile Include="OptimizationTests\HeuristicAlgorithmsTestUnit.cs" />
+    <Compile Include="OptimizationTests\LagrangeInterpolationTestUnit.cs" />
     <Compile Include="OptimizationTests\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>

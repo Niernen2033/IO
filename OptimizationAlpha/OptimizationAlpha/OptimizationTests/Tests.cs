@@ -7,6 +7,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using System.Windows.Forms;
 using OptimizationGlobals;
+using Communication;
 
 namespace OptimizationTests
 {
@@ -26,6 +27,7 @@ namespace OptimizationTests
 
             //if true - additional data neede
             this.allTests.Add("HAMJ - HeuristicAlgorithmsTest", true); // <== 0
+            this.allTests.Add("LA - LagrangeInterpolation", true); // <== 1
         }
 
         public async void Begin(int testIndex, ListBox logsBox, object optionalData = null)
@@ -38,6 +40,53 @@ namespace OptimizationTests
                         await BeginHeuristicAlgorithmsTest((HATestUnit)optionalData, logsBox);
                         break;
                     }
+                case 1:
+                    {
+                        BeginLagrangeInterpolationTest((LagrangeInterpolationTestUnit)optionalData, logsBox);
+                        break;
+                    }
+            }
+        }
+
+        private void BeginLagrangeInterpolationTest(LagrangeInterpolationTestUnit liTestUnit, ListBox logsBox)
+        {
+            LagrangeInterpolation lagrangeInterpolation = new LagrangeInterpolation();
+
+            for(int i=0; i<liTestUnit.FileToTest.Count; i++)
+            {
+                try
+                {
+                    
+
+                    if (!lagrangeInterpolation.LoadFile(liTestUnit.FileToTest[i].Path, liTestUnit.FileToTest[i].FileType))
+                    {
+                        logsBox.Items.Add("Error, File Load Fail");
+                    }
+                    else
+                    {
+                        logsBox.Items.Add("File Was Loaded");
+                    }
+
+                    if (!lagrangeInterpolation.GenerateFunctionExpression())
+                    {
+                        logsBox.Items.Add("Error, Function Fail");
+                    }
+                    else
+                    {
+                        logsBox.Items.Add("Function Pass:");
+
+                        logsBox.Items.Add(lagrangeInterpolation.FunctionExpression);
+
+                    }
+                }
+                catch(CommunicationException ex)
+                {
+                    if(ex.Fail == CommunicationExceptionType.CannotLoadFile)
+                    {
+                        logsBox.Items.Add("Error");
+                    }
+                        
+                }
             }
         }
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LagrangeInterpolationTestUnit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <FileToTestPath>
+    <Path>C:\Users\Zbyszek\Desktop\Punkty.txt</Path>
+    <FileType>TXT</FileType>
+  </FileToTestPath>
+
+  <FileToTestPath>
+    <Path>C:\Users\Zbyszek\Desktop\Punkty.xlsx</Path>
+    <FileType>XLSX</FileType>
+  </FileToTestPath>
+  <FileToTestPath>
+    <Path>C:\Users\Zbyszek\Desktop\Punkty.txt</Path>
+    <FileType>TXT</FileType>
+  </FileToTestPath>
+
+</LagrangeInterpolationTestUnit>
