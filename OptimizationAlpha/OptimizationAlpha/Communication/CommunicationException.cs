@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Communication
 {
-    public enum CommunicationExceptionType { CannotLoadFile };
+    public enum CommunicationExceptionType { CannotLoadFile, CannotReadLine };
 
     class CommunicationException : Exception
     {
+
         public CommunicationExceptionType Fail { get; private set; }
 
-        public CommunicationException(CommunicationExceptionType fail)
+        public CommunicationException(CommunicationExceptionType fail) : base()
         {
             this.Fail = fail;
         }

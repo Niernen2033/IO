@@ -13,6 +13,10 @@ namespace Communication
 
     class LagrangeInterpolation
     {
+        public string FunctionExpression { get; private set; }
+
+        private List<string> functionVariables;
+
         private List<Vector> vectors;
 
         public ReadOnlyCollection<Vector> Vectors { get { return this.vectors.AsReadOnly(); } }
@@ -20,50 +24,63 @@ namespace Communication
         public LagrangeInterpolation()
         {
             this.vectors = new List<Vector>();
+            this.FunctionExpression = string.Empty;
+            this.functionVariables = new List<string>();
         }
+
 
         public bool LoadFile(string path, FileType fileType)
         {
-            //funkcja ktora wcyzta dane i zapisze je do list "vectors"
-            //przyklad
-
             this.vectors.Clear();
             if (fileType == FileType.TXT)
             {
-                //staramy sie wczytac plik txt
                 try
                 {
                     using (TextReader reader = new StreamReader(path))
                     {
+                        string line;
+
                         try
                         {
-                            //wczytujemy jedna linijke
-                            string line = reader.ReadLine();
+                            while ((line = reader.ReadLine()) != null)
+                            {
+                                //funkcja ktora zamienia na punkty na vektor
+                                Vector vector = new Vector();
 
-                            //funkcja ktora zamienia na punkty na vektor
-                            Vector vector = new Vector();
-                            vector.Values.Add(5); // punkty z pliku a nie 5
+                                string[] tmp = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+                                bool ifAllParse = true;
 
-                            // na sam koniec dodajemy do listy
-                            this.vectors.Add(vector);
+                                for (int i = 0; i < tmp.Length; i++)
+                                {
+                                    double point_axis;
+                                    if (!double.TryParse(tmp[i], out point_axis))
+                                    {
+                                        ifAllParse = false;
+                                    }
+                                    else
+                                    {
+                                        vector.Values.Add(point_axis);
+                                    }
+
+                                }
+
+                                if (ifAllParse)
+                                {
+                                    this.vectors.Add(vector);
+                                }
+
+                            }
                         }
                         catch (Exception ex)
                         {
-                            //przy wczytywaniu cos poszlo nie tak
-                            //dodajmy np licznik niepowodzen. jesli niew czytalo nam 5 linijek to retrun false
-                            //jesli to tylko kilka linijek to mozemy kontynuowac bez przerwania
-                            /*
-                             * line_errors++;
-                             * if(Debug.DebugState)
-                             * {
-                             *      Debug.Show(ex.Message);
-                             * }
-                             * if(line_errors == 5)
-                             * {
-                             *      return false;
-                             * }
-                             */
+
+                            if (Debug.DebugState)
+                            {
+                                Debug.Show(ex.Message);
+                            }
+
+                            throw new CommunicationException(CommunicationExceptionType.CannotReadLine);
                         }
                     }
                 }
@@ -81,40 +98,64 @@ namespace Communication
                 //staramy sie wczytac plik excela
             }
 
-            //dotarlismy do konca wiec udalo sie wczytac plik
             return true;
         }
 
-        public bool GenerateFunctionExpression(out string result, out string variables)
+        public bool GenerateFunctionExpression()
         {
-            //funkcja bedzie wywolana po wczytaniu pliku wiec lista vektorow jest juz zapelniona
-            //dla pewnosci mozna to jednak sprawdzic
-            //ustawiamy domniemany result przed wyrzuceniem wyniku funkcji
-            string function_expression = string.Empty;
-            string function_variables = string.Empty;
 
-            if (this.vectors.Count == 0)
+            this.FunctionExpression = string.Empty;
+            this.functionVariables.Clear();
+
+            if (this.vectors.Count < 1)
             {
-                result = string.Empty;
-                variables = string.Empty;
                 return false;
             }
-            //mamy pewnosc ze mmay jakies vektory
-            //this.vectors.Count mowi nam o ilosci wektorów czyli np: (-2,2), (5,6) =>mamy 2 wektory
-            //this.vectors[0].Values.Count mowi nam o wielkosci wektora (w tym przypadku zeroweg) - (-3,2,4) da nam 3 bo wektor ma 3 punkty
 
-            //petla przez wszystkie pary punkty - wektorow
-            for (int i=0; i<this.vectors.Count; i++)
+            string temp_expression = string.Empty;
+            double sum_expression = 1.0;
+
+            for (int j = 0; j < this.vectors.Count; j++)
             {
-                //petla przez wszystkie punkty w wektorze i
-                for(int j=0; j<this.vectors[i].Values.Count; j++)
+                for (int i = 0; i < this.vectors.Count; i++)
                 {
-                    //this.vectors[i].Values[j]
+                    if (i != j)
+                    {
+                        if (this.vectors[j].Values[0] < 0)
+                        {
+                            temp_expression += ("(x+" + (-this.vectors[j].Values[0]).ToString() + ")");
+                        }
+                        else
+                        {
+                            temp_expression += ("(x-" + (this.vectors[j].Values[0]).ToString() + ")");
+                        }
+                        sum_expression = sum_expression * ((this.vectors[i].Values[0]) - (this.vectors[j].Values[0]));
+                        temp_expression += (" * ");
+                    }
                 }
+                if (this.vectors[j].Values[1] < 0)
+                {
+                    temp_expression += ("(" + (this.vectors[j].Values[1]).ToString() + ")" + "/(" + sum_expression + ")");
+                }
+                else
+                {
+                    temp_expression += ((this.vectors[j].Values[1]).ToString() + "/(" + sum_expression + ")");
+                }
+                if (sum_expression == 0.0)
+                {
+                    temp_expression = ("Devariable x occurs twice - this is not the function!");
+                }
+
+                if (j < this.vectors.Count - 1)
+                {
+                    temp_expression += (" + ");
+                }
+
+                sum_expression = 1.0;
             }
 
-            result = function_expression;
-            variables = function_variables;
+            this.FunctionExpression = temp_expression.Replace(" ", "");
+
             return true;
         }
     }
