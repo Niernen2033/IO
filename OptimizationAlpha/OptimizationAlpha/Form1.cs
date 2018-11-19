@@ -21,12 +21,12 @@ namespace OptimizationAlpha
 
         private void button_find_min_Click(object sender, EventArgs e)
         {
-            //ODPALA ALGORYTMY SZUKAJĄCE MINIMUM FUNKCJI ORAZ RYSUJE WYKRESY
+            //ODPALA ALGORYTMY SZUKAJĄCE MINIMUM FUNKCJI ORAZ RYSUJE WYKRESY...
         }
 
         private void button_find_max_Click(object sender, EventArgs e)
         {
-            //ODPALA ALGORYTMY SZUKAJĄCE MAXIMUM FUNKCJI ORAZ RYSUJE WYKRESY
+            //ODPALA ALGORYTMY SZUKAJĄCE MAXIMUM FUNKCJI ORAZ RYSUJE WYKRESY...
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -87,12 +87,12 @@ namespace OptimizationAlpha
 
         private void button_2d_Click(object sender, EventArgs e)
         {
-            //WYKRES 2D na panel_chart
+            //WYKRES 2D na panel_chart...
         }
 
         private void button_3d_Click(object sender, EventArgs e)
         {
-            //WYKRES 3D na panel_chart
+            //WYKRES 3D na panel_chart...
         }
     }
 }
