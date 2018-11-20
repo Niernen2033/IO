@@ -28,13 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.ilPanel1 = new ILNumerics.Drawing.ILPanel();
             this.SuspendLayout();
+            // 
+            // ilPanel1
+            // 
+            this.ilPanel1.Driver = ILNumerics.Drawing.RendererTypes.OpenGL;
+            this.ilPanel1.Editor = null;
+            this.ilPanel1.Location = new System.Drawing.Point(11, 11);
+            this.ilPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ilPanel1.Name = "ilPanel1";
+            this.ilPanel1.Rectangle = ((System.Drawing.RectangleF)(resources.GetObject("ilPanel1.Rectangle")));
+            this.ilPanel1.ShowUIControls = false;
+            this.ilPanel1.Size = new System.Drawing.Size(434, 325);
+            this.ilPanel1.TabIndex = 0;
+            this.ilPanel1.Timeout = ((uint)(0u));
+            this.ilPanel1.Load += new System.EventHandler(this.ilPanel1_Load);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(456, 347);
+            this.Controls.Add(this.ilPanel1);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -42,6 +59,8 @@
         }
 
         #endregion
+
+        private ILNumerics.Drawing.ILPanel ilPanel1;
     }
 }
 

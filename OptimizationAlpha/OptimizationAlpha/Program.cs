@@ -33,8 +33,8 @@ namespace OptimizationAlpha
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                //Application.Run(new Form1());
-                DisplayFunction3D.SPlot("x*y");
+                Application.Run(new Form1());
+                //DisplayFunction3D.SPlot("x*y");
                 Console.ReadKey();
             }
             else
