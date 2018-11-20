@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.Text;
+using DisplayFunction;
 
 namespace OptimizationAlpha
 {
@@ -32,7 +33,9 @@ namespace OptimizationAlpha
             {
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Application.Run(new Form1());
+                //Application.Run(new Form1());
+                DisplayFunction3D.SPlot("x*y");
+                Console.ReadKey();
             }
             else
             {

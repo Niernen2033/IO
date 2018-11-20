@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="info.lundin.math, Version=1.1.5287.18951, Culture=neutral, PublicKeyToken=2f7fe9ec5efab85f, processorArchitecture=MSIL">
-      <HintPath>..\packages\info.lundin.math.dll.1.1\lib\net45\info.lundin.math.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -56,6 +53,7 @@
     <Compile Include="Communication\CommunicationException.cs" />
     <Compile Include="Communication\LagrangeInterpolation.cs" />
     <Compile Include="DisplayFunction\DisplayFunction2D.cs" />
+    <Compile Include="DisplayFunction\DisplayFunction3D.cs" />
     <Compile Include="HeuristicAlgorithms\Algorithm.cs" />
     <Compile Include="HeuristicAlgorithms\AlgorithmException.cs" />
     <Compile Include="HeuristicAlgorithms\Maximum\ChargedSystemSearchAlgorithm.cs" />

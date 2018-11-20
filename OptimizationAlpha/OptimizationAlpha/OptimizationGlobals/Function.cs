@@ -39,7 +39,7 @@ namespace OptimizationGlobals
             double result = 0;
             try
             {
-                result = Eval.Execute<double>(this.FunctionExpression, argument_value);
+                //result = Eval.Execute<double>(this.FunctionExpression, argument_value);
             }
             catch
             {
@@ -54,7 +54,7 @@ namespace OptimizationGlobals
             double result = 0;
             try
             {
-                result = Eval.Execute<double>(expression, symbolsValues);
+                //result = Eval.Execute<double>(expression, symbolsValues);
             }
             catch (Exception e)
             {
