@@ -11,8 +11,6 @@ namespace OptimizationGlobals
     {
         public double Min { get; set; }
         public double Max { get; set; }
-        public object Value { get; internal set; }
-        public string Text { get; internal set; }
 
         public Compartment(double min, double max)
         {
