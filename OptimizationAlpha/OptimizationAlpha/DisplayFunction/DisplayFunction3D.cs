@@ -10,7 +10,7 @@ namespace DisplayFunction
 {
     class DisplayFunction3D
     {
-        public static string PathToGnuplot = @"\Repos\IO-repo\IO\OptimizationAlpha\gnuplot";
+        public static string PathToGnuplot = @"D:\Repos\IO-repo\IO\OptimizationAlpha\gnuplot";
         private static Process ExtPro;
         private static StreamWriter GnupStWr;
         private static List<StoredPlot> PlotBuffer;
