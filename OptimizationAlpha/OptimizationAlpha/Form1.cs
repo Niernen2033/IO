@@ -31,12 +31,7 @@ namespace OptimizationAlpha
                 textBox_function.Text = listBox_variables.Items[listBox_variables.SelectedIndex].ToString();
             }
         }
-
-        private void button_exit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
+        
         private void radioButton_one_var_CheckedChanged(object sender, EventArgs e)
         {
             listBox_variables.Enabled = true;

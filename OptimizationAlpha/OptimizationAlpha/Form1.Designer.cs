@@ -36,12 +36,12 @@
             this.tabPage_3d = new System.Windows.Forms.TabPage();
             this.groupBox_functions = new System.Windows.Forms.GroupBox();
             this.radioButton_two_var = new System.Windows.Forms.RadioButton();
+            this.button_help = new System.Windows.Forms.Button();
             this.listBox_variables = new System.Windows.Forms.ListBox();
             this.radioButton_one_var = new System.Windows.Forms.RadioButton();
-            this.button_exit = new System.Windows.Forms.Button();
-            this.button_help = new System.Windows.Forms.Button();
             this.button_search = new System.Windows.Forms.Button();
             this.button_read_from_file = new System.Windows.Forms.Button();
+            this.listBox_results = new System.Windows.Forms.ListBox();
             this.tabControl_chart.SuspendLayout();
             this.groupBox_functions.SuspendLayout();
             this.SuspendLayout();
@@ -131,6 +131,18 @@
             this.radioButton_two_var.UseVisualStyleBackColor = true;
             this.radioButton_two_var.CheckedChanged += new System.EventHandler(this.radioButton_two_var_CheckedChanged);
             // 
+            // button_help
+            // 
+            this.button_help.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_help.Location = new System.Drawing.Point(307, 10);
+            this.button_help.Name = "button_help";
+            this.button_help.Size = new System.Drawing.Size(71, 56);
+            this.button_help.TabIndex = 8;
+            this.button_help.TabStop = false;
+            this.button_help.Text = "Help";
+            this.button_help.UseVisualStyleBackColor = true;
+            this.button_help.Click += new System.EventHandler(this.button_help_Click);
+            // 
             // listBox_variables
             // 
             this.listBox_variables.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -158,30 +170,6 @@
             this.radioButton_one_var.UseVisualStyleBackColor = true;
             this.radioButton_one_var.CheckedChanged += new System.EventHandler(this.radioButton_one_var_CheckedChanged);
             // 
-            // button_exit
-            // 
-            this.button_exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_exit.Location = new System.Drawing.Point(1176, 586);
-            this.button_exit.Name = "button_exit";
-            this.button_exit.Size = new System.Drawing.Size(71, 23);
-            this.button_exit.TabIndex = 7;
-            this.button_exit.TabStop = false;
-            this.button_exit.Text = "Exit";
-            this.button_exit.UseVisualStyleBackColor = true;
-            this.button_exit.Click += new System.EventHandler(this.button_exit_Click);
-            // 
-            // button_help
-            // 
-            this.button_help.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_help.Location = new System.Drawing.Point(307, 10);
-            this.button_help.Name = "button_help";
-            this.button_help.Size = new System.Drawing.Size(71, 56);
-            this.button_help.TabIndex = 8;
-            this.button_help.TabStop = false;
-            this.button_help.Text = "Help";
-            this.button_help.UseVisualStyleBackColor = true;
-            this.button_help.Click += new System.EventHandler(this.button_help_Click);
-            // 
             // button_search
             // 
             this.button_search.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -206,14 +194,24 @@
             this.button_read_from_file.UseVisualStyleBackColor = true;
             this.button_read_from_file.Click += new System.EventHandler(this.button_read_from_file_Click);
             // 
+            // listBox_results
+            // 
+            this.listBox_results.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBox_results.FormattingEnabled = true;
+            this.listBox_results.Location = new System.Drawing.Point(869, 171);
+            this.listBox_results.Name = "listBox_results";
+            this.listBox_results.Size = new System.Drawing.Size(382, 446);
+            this.listBox_results.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1263, 621);
+            this.Controls.Add(this.listBox_results);
             this.Controls.Add(this.button_read_from_file);
             this.Controls.Add(this.button_search);
-            this.Controls.Add(this.button_exit);
             this.Controls.Add(this.groupBox_functions);
             this.Controls.Add(this.tabControl_chart);
             this.Controls.Add(this.label_results);
@@ -242,10 +240,10 @@
         private System.Windows.Forms.RadioButton radioButton_two_var;
         private System.Windows.Forms.RadioButton radioButton_one_var;
         private System.Windows.Forms.ListBox listBox_variables;
-        private System.Windows.Forms.Button button_exit;
         private System.Windows.Forms.Button button_help;
         private System.Windows.Forms.Button button_search;
         private System.Windows.Forms.Button button_read_from_file;
+        private System.Windows.Forms.ListBox listBox_results;
     }
 }
 
