@@ -57,6 +57,12 @@
     <Compile Include="DisplayFunction\FPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="HelpForm\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpForm\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="HeuristicAlgorithms\Algorithm.cs" />
     <Compile Include="HeuristicAlgorithms\AlgorithmException.cs" />
     <Compile Include="HeuristicAlgorithms\Maximum\ChargedSystemSearchAlgorithm.cs" />
@@ -93,6 +99,9 @@
     <Compile Include="OptimizationGlobals\Vector.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptimizationTests\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>

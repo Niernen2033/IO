@@ -29,8 +29,9 @@ namespace OptimizationTests
                 }
                 return true;
             }
-            catch (Exception exc)
+            catch
             {
+                
                 instance = default(T);
                 return false;
             }
@@ -53,7 +54,7 @@ namespace OptimizationTests
                 }
                 return true;
             }
-            catch (Exception exc)
+            catch
             {
                 return false;
             }

@@ -170,7 +170,7 @@ namespace DisplayFunction
             }
         }
 
-        public void ChangeAxisRange(double Xmin, double Xmax, double Ymin, double Ymax)
+        public void Draw(double Xmin, double Xmax, double Ymin, double Ymax)
         {
             this.Xmin = Xmin;
             this.Xmax = Xmax;
