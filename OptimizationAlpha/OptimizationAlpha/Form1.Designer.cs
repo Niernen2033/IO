@@ -34,6 +34,7 @@
             this.tabControl_chart = new System.Windows.Forms.TabControl();
             this.tabPage_2d = new System.Windows.Forms.TabPage();
             this.tabPage_3d = new System.Windows.Forms.TabPage();
+            this.panel1 = new DisplayFunction.FPanel();
             this.groupBox_functions = new System.Windows.Forms.GroupBox();
             this.radioButton_two_var = new System.Windows.Forms.RadioButton();
             this.button_help = new System.Windows.Forms.Button();
@@ -43,6 +44,7 @@
             this.button_read_from_file = new System.Windows.Forms.Button();
             this.listBox_results = new System.Windows.Forms.ListBox();
             this.tabControl_chart.SuspendLayout();
+            this.tabPage_3d.SuspendLayout();
             this.groupBox_functions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,6 +99,7 @@
             // 
             // tabPage_3d
             // 
+            this.tabPage_3d.Controls.Add(this.panel1);
             this.tabPage_3d.Location = new System.Drawing.Point(4, 22);
             this.tabPage_3d.Name = "tabPage_3d";
             this.tabPage_3d.Padding = new System.Windows.Forms.Padding(3);
@@ -105,6 +108,14 @@
             this.tabPage_3d.Text = "3D";
             this.tabPage_3d.UseVisualStyleBackColor = true;
             this.tabPage_3d.Click += new System.EventHandler(this.tabPage_3d_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.ColorBackgroundAxisStep = 3;
+            this.panel1.Location = new System.Drawing.Point(24, 45);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(373, 294);
+            this.panel1.TabIndex = 0;
             // 
             // groupBox_functions
             // 
@@ -222,6 +233,7 @@
             this.Text = "Extrema System Search";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.tabControl_chart.ResumeLayout(false);
+            this.tabPage_3d.ResumeLayout(false);
             this.groupBox_functions.ResumeLayout(false);
             this.groupBox_functions.PerformLayout();
             this.ResumeLayout(false);
@@ -244,6 +256,7 @@
         private System.Windows.Forms.Button button_search;
         private System.Windows.Forms.Button button_read_from_file;
         private System.Windows.Forms.ListBox listBox_results;
+        private DisplayFunction.FPanel panel1;
     }
 }
 

@@ -53,6 +53,10 @@
     <Compile Include="Communication\CommunicationException.cs" />
     <Compile Include="Communication\LagrangeInterpolation.cs" />
     <Compile Include="DisplayFunction\DisplayFunction2D.cs" />
+    <Compile Include="DisplayFunction\DisplayFunction3D.cs" />
+    <Compile Include="DisplayFunction\FPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HeuristicAlgorithms\Algorithm.cs" />
     <Compile Include="HeuristicAlgorithms\AlgorithmException.cs" />
     <Compile Include="HeuristicAlgorithms\Maximum\ChargedSystemSearchAlgorithm.cs" />

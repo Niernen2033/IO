@@ -19,8 +19,8 @@ namespace OptimizationGlobals
 
         public Function(string functionExpression, List<string> argumentsSymbol)
         {
-            this.FunctionExpression = functionExpression;
-            this.argumentsSymbol = argumentsSymbol;
+            this.FunctionExpression = string.Copy(functionExpression);
+            this.argumentsSymbol = new List<string>(argumentsSymbol);
         }
 
         public double Evaluate(List<double> argumentsValues)
