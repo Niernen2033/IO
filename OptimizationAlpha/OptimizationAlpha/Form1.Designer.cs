@@ -38,6 +38,7 @@
             this.tabPage_2d = new System.Windows.Forms.TabPage();
             this.myChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage_3d = new System.Windows.Forms.TabPage();
+            this.panel_3D = new DisplayFunction.FPanel();
             this.listBox_results = new System.Windows.Forms.ListBox();
             this.groupBox_functions = new System.Windows.Forms.GroupBox();
             this.textBox_Z_range_to = new System.Windows.Forms.TextBox();
@@ -61,7 +62,6 @@
             this.bestResultLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel_3D = new DisplayFunction.FPanel();
             this.tabControl_chart.SuspendLayout();
             this.tabPage_2d.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.myChart)).BeginInit();
@@ -143,11 +143,22 @@
             this.tabPage_3d.Location = new System.Drawing.Point(4, 22);
             this.tabPage_3d.Name = "tabPage_3d";
             this.tabPage_3d.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_3d.Size = new System.Drawing.Size(873, 639);
+            this.tabPage_3d.Size = new System.Drawing.Size(825, 639);
             this.tabPage_3d.TabIndex = 1;
             this.tabPage_3d.Text = "3D";
             this.tabPage_3d.UseVisualStyleBackColor = true;
             this.tabPage_3d.Click += new System.EventHandler(this.tabPage_3d_Click);
+            // 
+            // panel_3D
+            // 
+            this.panel_3D.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_3D.ColorBackgroundAxisStep = 3;
+            this.panel_3D.Location = new System.Drawing.Point(8, 9);
+            this.panel_3D.Name = "panel_3D";
+            this.panel_3D.Size = new System.Drawing.Size(811, 622);
+            this.panel_3D.TabIndex = 0;
             // 
             // listBox_results
             // 
@@ -402,17 +413,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(382, 33);
             this.panel1.TabIndex = 14;
-            // 
-            // panel_3D
-            // 
-            this.panel_3D.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel_3D.ColorBackgroundAxisStep = 3;
-            this.panel_3D.Location = new System.Drawing.Point(8, 9);
-            this.panel_3D.Name = "panel_3D";
-            this.panel_3D.Size = new System.Drawing.Size(859, 622);
-            this.panel_3D.TabIndex = 0;
             // 
             // Form1
             // 

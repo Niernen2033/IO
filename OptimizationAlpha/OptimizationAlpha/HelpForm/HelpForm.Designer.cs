@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HelpForm));
             this.TextBoxWindowHelp = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -52,11 +53,10 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(370, 178);
+            this.textBox1.Size = new System.Drawing.Size(370, 203);
             this.textBox1.TabIndex = 1;
             this.textBox1.TabStop = false;
-            this.textBox1.Text = "- You need to choose what you want search (minimum or maximum). \r\n\r\n- After that " +
-    "write equation or load equation from file and click search for show results.";
+            this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // HelpForm
             // 

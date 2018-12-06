@@ -75,10 +75,10 @@ namespace OptimizationAlpha
             listBox_results.Items.Clear();
 
             HeuristicAlgorithms myHeuristicAlgorithms = new HeuristicAlgorithms();
-            // best point
-            FitnessPoint myFitnessPoint = new FitnessPoint();
             // list of points
             List<FitnessPoint> myListOfFitnessPoints = new List<FitnessPoint>();
+            // best fitness point
+            FitnessPoint bestValue = new FitnessPoint();
 
             // assign function expresion to variable
             _myFunctionExpression = textBox_function.Text;
@@ -114,56 +114,83 @@ namespace OptimizationAlpha
                     break;
             }
 
-            try
+            if (!IsDigitsOnly(_myFunctionExpression))
             {
-                // find list of fitness points
-                myListOfFitnessPoints = await myHeuristicAlgorithms.GetAllOptimalPointsAsync(_myAlgorithmType, _myFunctionExpression, _myArgumentsSymbol, _myRanges);
-                // find best fitness point
-                myFitnessPoint = await myHeuristicAlgorithms.GetOptimalPointAsync(_myAlgorithmType, _myFunctionExpression, _myArgumentsSymbol, _myRanges);
-            }
-            catch (AlgorithmException ex)
-            {
-                switch (ex.Fail)
+
+
+                try
                 {
-                    case AlgorithmExceptionType.ParametersNotSeted:
-                        AddResult("Parameters no set");
-                        break;
-                    case AlgorithmExceptionType.FunctionNotExecuted:
-                        AddResult("Function not executed");
-                        break;
-                    case AlgorithmExceptionType.DifferenceArguments:
-                        AddResult("Difference arguments");
-                        break;
-                    case AlgorithmExceptionType.FunctionNotSeted:
-                        AddResult("Function no set");
-                        break;
-                    case AlgorithmExceptionType.WrongParametersArguments:
-                        AddResult("Wrong parameters arguments");
-                        break;
-                    case AlgorithmExceptionType.BadRanges:
-                        AddResult("Bad ranges");
-                        break;
+                    // find list of fitness points
+                    myListOfFitnessPoints = await myHeuristicAlgorithms.GetAllOptimalPointsAsync(_myAlgorithmType, _myFunctionExpression, _myArgumentsSymbol, _myRanges);
+                    // find best fitness point (minimum or maximum)
+                    if (_myAlgorithmType == AlgorithmType.Minimum)
+                    {
+                        bestValue = myListOfFitnessPoints.Min();
+                    }
+                    else
+                    {
+                        bestValue = myListOfFitnessPoints.Max();
+                    }
+
                 }
+                catch (AlgorithmException ex)
+                {
+                    switch (ex.Fail)
+                    {
+                        case AlgorithmExceptionType.ParametersNotSeted:
+                            AddResult("Parameters no set");
+                            break;
+                        case AlgorithmExceptionType.FunctionNotExecuted:
+                            AddResult("Function not executed");
+                            break;
+                        case AlgorithmExceptionType.DifferenceArguments:
+                            AddResult("Difference arguments");
+                            break;
+                        case AlgorithmExceptionType.FunctionNotSeted:
+                            AddResult("Function no set");
+                            break;
+                        case AlgorithmExceptionType.WrongParametersArguments:
+                            AddResult("Wrong parameters arguments");
+                            break;
+                        case AlgorithmExceptionType.BadRanges:
+                            AddResult("Bad ranges");
+                            break;
+                    }
+                }
+
+                foreach (var item in myListOfFitnessPoints)
+                {
+                    AddResult(item.Fitness);
+                }
+
+                AddBestResult(bestValue.Fitness, bestValue.Axis.Values);
             }
 
-            foreach (var item in myListOfFitnessPoints)
+            // end of if((!IsDigitsOnly(_myFunctionExpression))
+            else
             {
-                AddResult(item.Fitness);
+                bestResultLabel.Text = _myFunctionExpression;
             }
 
-            AddBestResult(myFitnessPoint.Fitness, myFitnessPoint.Axis.Values);
-
-            // display graph for function with 1 variable
+            // display graph for function with 1 variable of for constant functions
             if (_myArgumentsSymbol.Count == 1)
             {
                 DisplayFunction2D myDisplayFunction2D = new DisplayFunction2D(myChart, _myFunctionExpression);
                 // set axis X range
                 _axisXRange = new Compartment(-8, 8);
                 // set axis Y range
-                _axisYRange = new Compartment(-8, 8);
+                if (IsDigitsOnly(_myFunctionExpression))
+                {
+                    _axisYRange = new Compartment(-Convert.ToDouble(_myFunctionExpression), Convert.ToDouble(_myFunctionExpression));
+                }
+                else
+                {
+                    _axisYRange = new Compartment(-8, 8);
+                }
                 // show function graph
                 myDisplayFunction2D.Graph(_axisXRange, _axisYRange);
             }
+            // display graph for function with 2 variable
             else if (_myArgumentsSymbol.Count == 2)
             {
                 DisplayFunction3D myDisplayFunction3D = new DisplayFunction3D(this.panel_3D, _myFunctionExpression);
@@ -174,6 +201,17 @@ namespace OptimizationAlpha
                 // show function graph
                 await myDisplayFunction3D.GraphAync(_axisXRange, _axisYRange);
             }
+        }
+
+        bool IsDigitsOnly(string str)
+        {
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9' || c == ',')
+                    return false;
+            }
+
+            return true;
         }
 
         private void AssignArgumentSymbols()
@@ -202,7 +240,7 @@ namespace OptimizationAlpha
 
         private void AddResult(double val)
         {
-            listBox_results.Items.Add($"Result for {_myFunctionExpression}: {Math.Round(val, 2, MidpointRounding.AwayFromZero)}");
+            listBox_results.Items.Add($"Result for given function: {Math.Round(val, 2, MidpointRounding.AwayFromZero)}");
         }
 
         private void AddBestResult(double bestVal, List<double> values)
@@ -265,6 +303,49 @@ namespace OptimizationAlpha
         private void button_read_from_file_Click(object sender, EventArgs e)
         {
             // READ FROM FILE
+            Communication.LagrangeInterpolation lagrangeInterpolation = new Communication.LagrangeInterpolation();
+
+            string path = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // get the path of specified file
+                    path = openFileDialog.FileName;
+                }
+            }
+
+            try
+            {
+                if(lagrangeInterpolation.LoadFile(path, Communication.FileType.TXT))
+                {
+                    if (lagrangeInterpolation.GenerateFunctionExpression())
+                    {
+                        textBox_function.Text = lagrangeInterpolation.FunctionExpression;
+                    }
+                }
+            }
+
+            catch (Communication.CommunicationException ex)
+            {
+                switch (ex.Fail)
+                {
+                    case Communication.CommunicationExceptionType.CannotLoadFile:
+                        AddResult("Can not load file");
+                        break;
+                    case Communication.CommunicationExceptionType.CannotReadLine:
+                        AddResult("Can not read line");
+                        break;
+                }
+            }
+
+
         }
 
         private void textBox_range_from_KeyPress(object sender, KeyPressEventArgs e)
@@ -303,5 +384,6 @@ namespace OptimizationAlpha
         {
 
         }
+
     }
 }

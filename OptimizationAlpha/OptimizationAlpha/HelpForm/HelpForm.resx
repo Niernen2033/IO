@@ -117,4 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value>- You need to choose what you want search (minimum or maximum), 
+
+- You need to complete range boxes for each variable,
+
+- After that write equation or load points from file and click search for show results.</value>
+  </data>
 </root>
