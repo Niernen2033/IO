@@ -21,6 +21,7 @@ namespace OptimizationAlpha
         private List<Compartment> _myRanges;
         private Compartment _axisXRange;
         private Compartment _axisYRange;
+        private FitnessPoint _bestValue;
 
         public Form1()
         {
@@ -45,6 +46,7 @@ namespace OptimizationAlpha
         private void radioButton_one_var_CheckedChanged(object sender, EventArgs e)
         {
             listBox_variables.Enabled = true;
+
             if (radioButton_one_var.Checked == true)
             {
                 _myAlgorithmType = AlgorithmType.Minimum;
@@ -66,6 +68,35 @@ namespace OptimizationAlpha
             button_search.Enabled = true;
             button_read_from_file.Enabled = true;
             textBox_function.Text = listBox_variables.Items[listBox_variables.SelectedIndex].ToString();
+
+            switch (listBox_variables.SelectedIndex)
+            {
+                case 0:
+                    textBox_X_range_from.Enabled = true;
+                    textBox_X_range_to.Enabled = true;
+                    textBox_Y_range_from.Enabled = false;
+                    textBox_Y_range_to.Enabled = false;
+                    textBox_Z_range_from.Enabled = false;
+                    textBox_Z_range_to.Enabled = false;
+                    break;
+                case 1:
+                    textBox_X_range_from.Enabled = true;
+                    textBox_X_range_to.Enabled = true;
+                    textBox_Y_range_from.Enabled = true;
+                    textBox_Y_range_to.Enabled = true;
+                    textBox_Z_range_from.Enabled = false;
+                    textBox_Z_range_to.Enabled = false;
+                    break;
+                case 2:
+                    textBox_X_range_from.Enabled = true;
+                    textBox_X_range_to.Enabled = true;
+                    textBox_Y_range_from.Enabled = true;
+                    textBox_Y_range_to.Enabled = true;
+                    textBox_Z_range_from.Enabled = true;
+                    textBox_Z_range_to.Enabled = true;
+                    break;
+            }
+
         }
 
         private async void button_search_Click(object sender, EventArgs e)
@@ -78,7 +109,7 @@ namespace OptimizationAlpha
             // list of points
             List<FitnessPoint> myListOfFitnessPoints = new List<FitnessPoint>();
             // best fitness point
-            FitnessPoint bestValue = new FitnessPoint();
+            _bestValue = new FitnessPoint();
 
             // assign function expresion to variable
             _myFunctionExpression = textBox_function.Text;
@@ -125,11 +156,11 @@ namespace OptimizationAlpha
                     // find best fitness point (minimum or maximum)
                     if (_myAlgorithmType == AlgorithmType.Minimum)
                     {
-                        bestValue = myListOfFitnessPoints.Min();
+                        _bestValue = myListOfFitnessPoints.Min();
                     }
                     else
                     {
-                        bestValue = myListOfFitnessPoints.Max();
+                        _bestValue = myListOfFitnessPoints.Max();
                     }
 
                 }
@@ -163,7 +194,7 @@ namespace OptimizationAlpha
                     AddResult(item.Fitness);
                 }
 
-                AddBestResult(bestValue.Fitness, bestValue.Axis.Values);
+                AddBestResult(_bestValue.Fitness, _bestValue.Axis.Values);
             }
 
             // end of if((!IsDigitsOnly(_myFunctionExpression))
@@ -177,7 +208,7 @@ namespace OptimizationAlpha
             {
                 DisplayFunction2D myDisplayFunction2D = new DisplayFunction2D(myChart, _myFunctionExpression);
                 // set axis X range
-                _axisXRange = new Compartment(-8, 8);
+                _axisXRange = new Compartment(_myRanges[0].Min, _myRanges[0].Max);
                 // set axis Y range
                 if (IsDigitsOnly(_myFunctionExpression))
                 {
@@ -185,7 +216,7 @@ namespace OptimizationAlpha
                 }
                 else
                 {
-                    _axisYRange = new Compartment(-8, 8);
+                    _axisYRange = new Compartment(myListOfFitnessPoints.Min().Fitness - 10, myListOfFitnessPoints.Max().Fitness + 10);
                 }
                 // show function graph
                 myDisplayFunction2D.Graph(_axisXRange, _axisYRange);
@@ -195,9 +226,9 @@ namespace OptimizationAlpha
             {
                 DisplayFunction3D myDisplayFunction3D = new DisplayFunction3D(this.panel_3D, _myFunctionExpression);
                 // set axis X range
-                _axisXRange = new Compartment(-10, 10);
+                _axisXRange = new Compartment(_myRanges[0].Min, _myRanges[0].Max);
                 // set axis Y range
-                _axisYRange = new Compartment(-10, 10);
+                _axisYRange = new Compartment(_myRanges[1].Min, _myRanges[1].Max);
                 // show function graph
                 await myDisplayFunction3D.GraphAync(_axisXRange, _axisYRange);
             }
@@ -323,7 +354,7 @@ namespace OptimizationAlpha
 
             try
             {
-                if(lagrangeInterpolation.LoadFile(path, Communication.FileType.TXT))
+                if (lagrangeInterpolation.LoadFile(path, Communication.FileType.TXT))
                 {
                     if (lagrangeInterpolation.GenerateFunctionExpression())
                     {
@@ -360,7 +391,7 @@ namespace OptimizationAlpha
                 e.Handled = false;
             }
             // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
                 e.Handled = true;
         }
 
@@ -376,14 +407,72 @@ namespace OptimizationAlpha
                 e.Handled = false;
             }
             // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
                 e.Handled = true;
         }
 
-        private void textBox_function_TextChanged(object sender, EventArgs e)
+        private void textBox_Y_range_from_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
+            {
+                e.Handled = true;
+            }
+            // allow Backspace  
+            if (e.KeyChar == (char)8)
+            {
+                e.Handled = false;
+            }
+            // only allow minus sign at the beginning
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
+                e.Handled = true;
         }
 
+        private void textBox_Z_range_from_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
+            {
+                e.Handled = true;
+            }
+            // allow Backspace  
+            if (e.KeyChar == (char)8)
+            {
+                e.Handled = false;
+            }
+            // only allow minus sign at the beginning
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
+                e.Handled = true;
+        }
+
+        private void textBox_Y_range_to_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
+            {
+                e.Handled = true;
+            }
+            // allow Backspace  
+            if (e.KeyChar == (char)8)
+            {
+                e.Handled = false;
+            }
+            // only allow minus sign at the beginning
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
+                e.Handled = true;
+        }
+
+        private void textBox_Z_range_to_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
+            {
+                e.Handled = true;
+            }
+            // allow Backspace  
+            if (e.KeyChar == (char)8)
+            {
+                e.Handled = false;
+            }
+            // only allow minus sign at the beginning
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
+                e.Handled = true;
+        }
     }
 }

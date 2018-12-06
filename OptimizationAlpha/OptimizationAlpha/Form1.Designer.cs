@@ -81,7 +81,6 @@
             this.textBox_function.TabStop = false;
             this.textBox_function.Text = "Write a function...";
             this.textBox_function.Click += new System.EventHandler(this.textBox_function_Text_Click);
-            this.textBox_function.TextChanged += new System.EventHandler(this.textBox_function_TextChanged);
             this.textBox_function.Leave += new System.EventHandler(this.textBox_function_Leave);
             // 
             // label_results
@@ -143,7 +142,7 @@
             this.tabPage_3d.Location = new System.Drawing.Point(4, 22);
             this.tabPage_3d.Name = "tabPage_3d";
             this.tabPage_3d.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_3d.Size = new System.Drawing.Size(825, 639);
+            this.tabPage_3d.Size = new System.Drawing.Size(873, 639);
             this.tabPage_3d.TabIndex = 1;
             this.tabPage_3d.Text = "3D";
             this.tabPage_3d.UseVisualStyleBackColor = true;
@@ -198,10 +197,12 @@
             // 
             // textBox_Z_range_to
             // 
+            this.textBox_Z_range_to.Enabled = false;
             this.textBox_Z_range_to.Location = new System.Drawing.Point(276, 140);
             this.textBox_Z_range_to.Name = "textBox_Z_range_to";
             this.textBox_Z_range_to.Size = new System.Drawing.Size(100, 20);
             this.textBox_Z_range_to.TabIndex = 23;
+            this.textBox_Z_range_to.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Z_range_to_KeyPress);
             // 
             // label6
             // 
@@ -216,10 +217,12 @@
             // 
             // textBox_Z_range_from
             // 
+            this.textBox_Z_range_from.Enabled = false;
             this.textBox_Z_range_from.Location = new System.Drawing.Point(135, 140);
             this.textBox_Z_range_from.Name = "textBox_Z_range_from";
             this.textBox_Z_range_from.Size = new System.Drawing.Size(100, 20);
             this.textBox_Z_range_from.TabIndex = 21;
+            this.textBox_Z_range_from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Z_range_from_KeyPress);
             // 
             // label7
             // 
@@ -233,10 +236,12 @@
             // 
             // textBox_Y_range_to
             // 
+            this.textBox_Y_range_to.Enabled = false;
             this.textBox_Y_range_to.Location = new System.Drawing.Point(276, 102);
             this.textBox_Y_range_to.Name = "textBox_Y_range_to";
             this.textBox_Y_range_to.Size = new System.Drawing.Size(100, 20);
             this.textBox_Y_range_to.TabIndex = 19;
+            this.textBox_Y_range_to.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Y_range_to_KeyPress);
             // 
             // label4
             // 
@@ -251,10 +256,12 @@
             // 
             // textBox_Y_range_from
             // 
+            this.textBox_Y_range_from.Enabled = false;
             this.textBox_Y_range_from.Location = new System.Drawing.Point(135, 102);
             this.textBox_Y_range_from.Name = "textBox_Y_range_from";
             this.textBox_Y_range_from.Size = new System.Drawing.Size(100, 20);
             this.textBox_Y_range_from.TabIndex = 17;
+            this.textBox_Y_range_from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Y_range_from_KeyPress);
             // 
             // label5
             // 
@@ -268,6 +275,7 @@
             // 
             // textBox_X_range_to
             // 
+            this.textBox_X_range_to.Enabled = false;
             this.textBox_X_range_to.Location = new System.Drawing.Point(276, 68);
             this.textBox_X_range_to.Name = "textBox_X_range_to";
             this.textBox_X_range_to.Size = new System.Drawing.Size(100, 20);
@@ -298,6 +306,7 @@
             // 
             // textBox_X_range_from
             // 
+            this.textBox_X_range_from.Enabled = false;
             this.textBox_X_range_from.Location = new System.Drawing.Point(135, 68);
             this.textBox_X_range_from.Name = "textBox_X_range_from";
             this.textBox_X_range_from.Size = new System.Drawing.Size(100, 20);
