@@ -78,6 +78,7 @@ namespace OptimizationAlpha
                     textBox_Y_range_to.Enabled = false;
                     textBox_Z_range_from.Enabled = false;
                     textBox_Z_range_to.Enabled = false;
+                    this.button_read_from_file.Enabled = true;
                     break;
                 case 1:
                     textBox_X_range_from.Enabled = true;
@@ -86,6 +87,7 @@ namespace OptimizationAlpha
                     textBox_Y_range_to.Enabled = true;
                     textBox_Z_range_from.Enabled = false;
                     textBox_Z_range_to.Enabled = false;
+                    this.button_read_from_file.Enabled = false;
                     break;
                 case 2:
                     textBox_X_range_from.Enabled = true;
@@ -94,6 +96,7 @@ namespace OptimizationAlpha
                     textBox_Y_range_to.Enabled = true;
                     textBox_Z_range_from.Enabled = true;
                     textBox_Z_range_to.Enabled = true;
+                    this.button_read_from_file.Enabled = false;
                     break;
             }
 
