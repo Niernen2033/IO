@@ -391,8 +391,17 @@ namespace OptimizationAlpha
                 e.Handled = false;
             }
             // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
-                e.Handled = true;
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
+            {
+                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
         }
 
         private void textBox_range_to_KeyPress(object sender, KeyPressEventArgs e)
@@ -407,8 +416,17 @@ namespace OptimizationAlpha
                 e.Handled = false;
             }
             // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
-                e.Handled = true;
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
+            {
+                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
         }
 
         private void textBox_Y_range_from_KeyPress(object sender, KeyPressEventArgs e)
@@ -423,8 +441,17 @@ namespace OptimizationAlpha
                 e.Handled = false;
             }
             // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
-                e.Handled = true;
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
+            {
+                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
         }
 
         private void textBox_Z_range_from_KeyPress(object sender, KeyPressEventArgs e)
@@ -439,8 +466,17 @@ namespace OptimizationAlpha
                 e.Handled = false;
             }
             // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
-                e.Handled = true;
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
+            {
+                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
         }
 
         private void textBox_Y_range_to_KeyPress(object sender, KeyPressEventArgs e)
@@ -455,8 +491,17 @@ namespace OptimizationAlpha
                 e.Handled = false;
             }
             // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
-                e.Handled = true;
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
+            {
+                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
         }
 
         private void textBox_Z_range_to_KeyPress(object sender, KeyPressEventArgs e)
@@ -471,8 +516,17 @@ namespace OptimizationAlpha
                 e.Handled = false;
             }
             // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Contains('-'))
-                e.Handled = true;
+            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
+            {
+                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
+                {
+                    e.Handled = false;
+                }
+                else
+                {
+                    e.Handled = true;
+                }
+            }
         }
     }
 }
