@@ -88,7 +88,7 @@ namespace DisplayFunction
             this.DoubleBuffered = true;
             this.font_x = new Font("Arial", 8);
             this.font_y = new Font("Arial", 8);
-            this.color_background_axis_step = 3;
+            this.color_background_axis_step = 1;
             this.background_colour_points = null;
             this.axis_unit_points_x = new List<FPointUint>();
             this.axis_unit_points_y = new List<FPointUint>();
@@ -111,7 +111,6 @@ namespace DisplayFunction
         {
             this.font_x = new Font("Arial", 8);
             this.font_y = new Font("Arial", 8);
-            this.color_background_axis_step = 3;
             this.background_colour_points = null;
             this.Center_X = null;
             this.Center_Y = null;
@@ -455,15 +454,15 @@ namespace DisplayFunction
             step_x = this.MAX_X / this.color_background_axis_size_x;
             step_y = this.MAX_Y / this.color_background_axis_size_y;
             jump_step_x = this.Xmin - step_x;
+            jump_step_y = this.Ymax + step_y;
 
             for (int i = 0; i < this.color_background_axis_size_x; i++)
             {
-                jump_step_y = this.Ymax + step_y;
                 jump_step_x += step_x;
-                for (int j = 0; j < this.color_background_axis_size_y; j++)
+                Parallel.For(0, this.color_background_axis_size_y, j =>
                 {
-                    jump_step_y -= step_y;
-                    double function_value = this.function.Evaluate(new List<double>() { jump_step_x + (step_x / 2), jump_step_y + (step_y / 2) });
+                    double jump_step_y_parallel = jump_step_y - ((j + 1) * step_y);
+                    double function_value = this.function.Evaluate(new List<double>() { jump_step_x + (step_x / 2), jump_step_y_parallel + (step_y / 2) });
                     this.background_colour_points[i, j] = new FPointColor(i * this.color_background_axis_step,
                         j * this.color_background_axis_step,
                         function_value, Color.Red);
@@ -472,7 +471,7 @@ namespace DisplayFunction
                         max_background_value = this.background_colour_points[i, j].Value;
                     if (this.background_colour_points[i, j].Value < min_background_value)
                         min_background_value = this.background_colour_points[i, j].Value;
-                }
+                });
             }
 
             double jump_value = 0;
