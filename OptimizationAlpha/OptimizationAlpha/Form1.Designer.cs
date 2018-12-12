@@ -38,7 +38,6 @@
             this.tabPage_2d = new System.Windows.Forms.TabPage();
             this.myChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage_3d = new System.Windows.Forms.TabPage();
-            this.listBox_results = new System.Windows.Forms.ListBox();
             this.groupBox_functions = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,28 +51,34 @@
             this.radioButton_one_var = new System.Windows.Forms.RadioButton();
             this.button_search = new System.Windows.Forms.Button();
             this.button_read_from_file = new System.Windows.Forms.Button();
-            this.bestResultLabel = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.numericUpDown_X_range_from = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_X_range_to = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_Y_range_from = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_Z_range_from = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_Y_range_to = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_Z_range_to = new System.Windows.Forms.NumericUpDown();
+            this.button_debug = new System.Windows.Forms.Button();
+            this.listView_results = new System.Windows.Forms.ListView();
+            this.listBox_help = new System.Windows.Forms.ListBox();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.numericUpDown_precison = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel_3D = new DisplayFunction.FPanel();
             this.tabControl_chart.SuspendLayout();
             this.tabPage_2d.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.myChart)).BeginInit();
             this.tabPage_3d.SuspendLayout();
             this.groupBox_functions.SuspendLayout();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_from)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_to)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_from)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_from)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_to)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_to)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_precison)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox_function
@@ -153,16 +158,6 @@
             this.tabPage_3d.Text = "3D";
             this.tabPage_3d.UseVisualStyleBackColor = true;
             this.tabPage_3d.Click += new System.EventHandler(this.tabPage_3d_Click);
-            // 
-            // listBox_results
-            // 
-            this.listBox_results.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox_results.FormattingEnabled = true;
-            this.listBox_results.Location = new System.Drawing.Point(887, 284);
-            this.listBox_results.Name = "listBox_results";
-            this.listBox_results.Size = new System.Drawing.Size(382, 342);
-            this.listBox_results.TabIndex = 11;
             // 
             // groupBox_functions
             // 
@@ -326,44 +321,6 @@
             this.button_read_from_file.UseVisualStyleBackColor = true;
             this.button_read_from_file.Click += new System.EventHandler(this.button_read_from_file_Click);
             // 
-            // bestResultLabel
-            // 
-            this.bestResultLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bestResultLabel.AutoSize = true;
-            this.bestResultLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.bestResultLabel.ForeColor = System.Drawing.Color.Green;
-            this.bestResultLabel.Location = new System.Drawing.Point(75, 3);
-            this.bestResultLabel.Name = "bestResultLabel";
-            this.bestResultLabel.Size = new System.Drawing.Size(0, 13);
-            this.bestResultLabel.TabIndex = 13;
-            this.bestResultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 3);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(62, 13);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Best result: ";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.AutoScroll = true;
-            this.panel1.AutoSize = true;
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.bestResultLabel);
-            this.panel1.Location = new System.Drawing.Point(887, 628);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(382, 33);
-            this.panel1.TabIndex = 14;
-            // 
             // numericUpDown_X_range_from
             // 
             this.numericUpDown_X_range_from.DecimalPlaces = 2;
@@ -472,6 +429,96 @@
             this.numericUpDown_Z_range_to.Size = new System.Drawing.Size(99, 20);
             this.numericUpDown_Z_range_to.TabIndex = 28;
             // 
+            // button_debug
+            // 
+            this.button_debug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_debug.Location = new System.Drawing.Point(887, 632);
+            this.button_debug.Name = "button_debug";
+            this.button_debug.Size = new System.Drawing.Size(75, 23);
+            this.button_debug.TabIndex = 15;
+            this.button_debug.Text = "button1";
+            this.button_debug.UseVisualStyleBackColor = true;
+            this.button_debug.Click += new System.EventHandler(this.button_debug_Click);
+            // 
+            // listView_results
+            // 
+            this.listView_results.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView_results.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            this.listView_results.Location = new System.Drawing.Point(892, 275);
+            this.listView_results.Name = "listView_results";
+            this.listView_results.Size = new System.Drawing.Size(377, 351);
+            this.listView_results.TabIndex = 17;
+            this.listView_results.UseCompatibleStateImageBehavior = false;
+            this.listView_results.View = System.Windows.Forms.View.Details;
+            // 
+            // listBox_help
+            // 
+            this.listBox_help.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBox_help.FormattingEnabled = true;
+            this.listBox_help.Location = new System.Drawing.Point(968, 631);
+            this.listBox_help.Name = "listBox_help";
+            this.listBox_help.Size = new System.Drawing.Size(301, 30);
+            this.listBox_help.TabIndex = 18;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Result";
+            this.columnHeader1.Width = 90;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "X";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader2.Width = 90;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Y";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader3.Width = 90;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Z";
+            this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader4.Width = 90;
+            // 
+            // numericUpDown_precison
+            // 
+            this.numericUpDown_precison.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown_precison.Location = new System.Drawing.Point(1222, 249);
+            this.numericUpDown_precison.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown_precison.Name = "numericUpDown_precison";
+            this.numericUpDown_precison.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDown_precison.TabIndex = 19;
+            this.numericUpDown_precison.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label3.Location = new System.Drawing.Point(1139, 251);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 16);
+            this.label3.TabIndex = 20;
+            this.label3.Text = "Precision:";
+            // 
             // panel_3D
             // 
             this.panel_3D.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -488,8 +535,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1281, 665);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.listBox_results);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.numericUpDown_precison);
+            this.Controls.Add(this.listBox_help);
+            this.Controls.Add(this.listView_results);
+            this.Controls.Add(this.button_debug);
             this.Controls.Add(this.button_read_from_file);
             this.Controls.Add(this.button_search);
             this.Controls.Add(this.groupBox_functions);
@@ -507,14 +557,13 @@
             this.tabPage_3d.ResumeLayout(false);
             this.groupBox_functions.ResumeLayout(false);
             this.groupBox_functions.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_from)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_to)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_from)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_from)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_to)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_to)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_precison)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -534,13 +583,9 @@
         private System.Windows.Forms.Button button_help;
         private System.Windows.Forms.Button button_search;
         private System.Windows.Forms.Button button_read_from_file;
-        private System.Windows.Forms.ListBox listBox_results;
         private System.Windows.Forms.DataVisualization.Charting.Chart myChart;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label bestResultLabel;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label4;
@@ -552,6 +597,15 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_Y_range_from;
         private System.Windows.Forms.NumericUpDown numericUpDown_X_range_to;
         private System.Windows.Forms.NumericUpDown numericUpDown_X_range_from;
+        private System.Windows.Forms.Button button_debug;
+        private System.Windows.Forms.ListView listView_results;
+        private System.Windows.Forms.ListBox listBox_help;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.NumericUpDown numericUpDown_precison;
+        private System.Windows.Forms.Label label3;
     }
 }
 

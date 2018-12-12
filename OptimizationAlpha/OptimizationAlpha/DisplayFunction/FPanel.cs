@@ -59,6 +59,7 @@ namespace DisplayFunction
             }
         }
         private bool is_have_function;
+        private bool is_have_background;
         private double Xmin, Xmax, Ymin, Ymax, Step_X, Step_Y, axis_unit_X, axis_unit_Y, MAX_X, MAX_Y;
         private int color_background_axis_step, color_background_axis_size_x, color_background_axis_size_y;
         private CenterPoint Center_X, Center_Y;
@@ -66,6 +67,7 @@ namespace DisplayFunction
         private Font font_x, font_y;
         private FPointColor[,] background_colour_points;
         private Function function;
+        private List<FPointColor> points;
 
         public int ColorBackgroundAxisStep
         {
@@ -88,8 +90,10 @@ namespace DisplayFunction
             this.DoubleBuffered = true;
             this.font_x = new Font("Arial", 8);
             this.font_y = new Font("Arial", 8);
+            this.points = new List<FPointColor>();
             this.color_background_axis_step = 1;
             this.background_colour_points = null;
+            this.is_have_background = false;
             this.axis_unit_points_x = new List<FPointUint>();
             this.axis_unit_points_y = new List<FPointUint>();
             this.is_have_function = false;
@@ -107,6 +111,37 @@ namespace DisplayFunction
             this.Invalidate();
         }
 
+        public void AddPoint(double x, double y, Color color, int size)
+        {
+            double help_x = Math.Sqrt(Math.Pow(Math.Abs(x) - Math.Abs(this.Center_X.XYValue), 2));
+            double jump_x = this.Width / this.MAX_X;
+            if (x >= 0)
+            {
+                help_x = this.Center_X.XY + (help_x * jump_x);
+            }
+            else
+            {
+                help_x = this.Center_X.XY - (help_x * jump_x);
+            }
+            double help_y = Math.Sqrt(Math.Pow(Math.Abs(y) - Math.Abs(this.Center_Y.XYValue), 2));
+            double jump_y = this.Height / this.MAX_Y;
+            if (y >= 0)
+            {
+                help_y = this.Center_Y.XY - (help_y * jump_y);
+            }
+            else
+            {
+                help_y = this.Center_Y.XY + (help_y * jump_y);
+            }
+            this.points.Add(new FPointColor(help_x-1,help_y-1, size, color));
+        }
+
+        public void ClearPoints()
+        {
+            this.points.Clear();
+            this.is_have_background = false;
+        }
+
         public void ClearAll()
         {
             this.font_x = new Font("Arial", 8);
@@ -114,6 +149,7 @@ namespace DisplayFunction
             this.background_colour_points = null;
             this.Center_X = null;
             this.Center_Y = null;
+            this.is_have_background = false;
             this.axis_unit_points_x.Clear();
             this.axis_unit_points_y.Clear();
             this.is_have_function = false;
@@ -122,6 +158,7 @@ namespace DisplayFunction
             this.Xmax = 10;
             this.Ymin = 0;
             this.Ymax = 10;
+            this.points.Clear();
             this.FindStepsAndCenter();
 
             this.Invalidate();
@@ -143,7 +180,7 @@ namespace DisplayFunction
         private void FPanel_Paint(object sender, PaintEventArgs e)
         {
             //background*********************
-            if (this.is_have_function)
+            if (this.is_have_function && this.is_have_background)
             {
                 for (int i = 0; i < this.color_background_axis_size_x; i++)
                 {
@@ -167,6 +204,12 @@ namespace DisplayFunction
                 e.Graphics.DrawString(point.Unit.ToString(), this.font_y, Brushes.Black, new Point((int)point.X, (int)point.Y));
                 e.Graphics.DrawLine(new Pen(Color.Black, 1), new Point((int)point.OriginX + 2, (int)point.OriginY), new Point((int)point.OriginX - 2, (int)point.OriginY));
             }
+
+            //points**********************
+            foreach (FPointColor point in this.points)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(point.Color), new Rectangle((int)point.X, (int)point.Y, (int)point.Value, (int)point.Value));
+            }
         }
 
         public void Draw(double Xmin, double Xmax, double Ymin, double Ymax)
@@ -177,7 +220,10 @@ namespace DisplayFunction
             this.Ymax = Ymax;
             this.FindStepsAndCenter();
             if (this.is_have_function)
+            {
                 this.PrepereBackground();
+                this.is_have_background = true;
+            }
             this.Invalidate();
         }
 

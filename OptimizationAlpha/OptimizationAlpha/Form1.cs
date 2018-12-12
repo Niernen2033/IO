@@ -23,12 +23,17 @@ namespace OptimizationAlpha
         private Compartment _axisYRange;
         private FitnessPoint _bestValue;
 
+        DisplayFunction3D myDisplayFunction3D;
+
         public Form1()
         {
             InitializeComponent();
             PostInitializeComponent();
+
             //disable legend in chart
             myChart.Series[0].IsVisibleInLegend = false;
+
+            this.myDisplayFunction3D = new DisplayFunction3D(this.panel_3D);
         }
 
         private void PostInitializeComponent()
@@ -39,6 +44,10 @@ namespace OptimizationAlpha
             this.numericUpDown_Y_range_to.Enabled = false;
             this.numericUpDown_Z_range_from.Enabled = false;
             this.numericUpDown_Z_range_to.Enabled = false;
+
+            //tests
+            this.button_help.Visible = true;
+            this.listBox_help.Visible = true;
         }
 
         private void textBox_function_Text_Click(object sender, EventArgs e)
@@ -178,7 +187,7 @@ namespace OptimizationAlpha
             this.button_search.Enabled = false;
             // CODE FOR SEARCHING MIN/MAX ALGHORITM
             // clear listbox results
-            listBox_results.Items.Clear();
+            listView_results.Items.Clear();
 
             HeuristicAlgorithms myHeuristicAlgorithms = new HeuristicAlgorithms();
             // list of points
@@ -305,18 +314,30 @@ namespace OptimizationAlpha
                     return;
                 }
 
-                foreach (var item in myListOfFitnessPoints)
+                double twinRangeFitness = (this.numericUpDown_precison.Value == 0) ? 0 : 1;
+                for (int i=0; i< (int)this.numericUpDown_precison.Value; i++)
                 {
-                    AddResult(item.Fitness, item.Axis.Values);
+                    twinRangeFitness /= 10;
+                }
+                twinRangeFitness = _bestValue.Fitness - twinRangeFitness;
+                foreach (FitnessPoint item in myListOfFitnessPoints)
+                {
+                    if(item.Fitness == _bestValue.Fitness)
+                    {
+                        AddResult(item.Fitness, item.Axis.Values, Color.Green);
+                        continue;
+                    }
+                    if (Math.Round(item.Fitness, (int)this.numericUpDown_precison.Value, MidpointRounding.AwayFromZero) <= _bestValue.Fitness &&
+                        Math.Round(item.Fitness, (int)this.numericUpDown_precison.Value, MidpointRounding.AwayFromZero) >= twinRangeFitness)
+                    {
+                        AddResult(item.Fitness, item.Axis.Values, Color.Orange);
+                    }
+                    else
+                    {
+                        AddResult(item.Fitness, item.Axis.Values, Color.White);
+                    }
                 }
 
-                AddBestResult(_bestValue.Fitness, _bestValue.Axis.Values);
-            }
-
-            // end of if((!IsDigitsOnly(_myFunctionExpression))
-            else
-            {
-                bestResultLabel.Text = _myFunctionExpression;
             }
 
             // display graph for function with 1 variable of for constant functions
@@ -340,13 +361,31 @@ namespace OptimizationAlpha
             // display graph for function with 2 variable
             else if (_myArgumentsSymbol.Count == 2)
             {
-                DisplayFunction3D myDisplayFunction3D = new DisplayFunction3D(this.panel_3D, _myFunctionExpression);
+                this.myDisplayFunction3D.ClearPoints();
+                this.myDisplayFunction3D.Load(_myFunctionExpression);
                 // set axis X range
                 _axisXRange = new Compartment(_myRanges[0].Min, _myRanges[0].Max);
                 // set axis Y range
                 _axisYRange = new Compartment(_myRanges[1].Min, _myRanges[1].Max);
                 // show function graph
-                await myDisplayFunction3D.GraphAync(_axisXRange, _axisYRange);
+                await this.myDisplayFunction3D.GraphAync(_axisXRange, _axisYRange);
+
+                //possible bests
+                double twinRangeFitness = (this.numericUpDown_precison.Value == 0) ? 0 : 1;
+                for (int i = 0; i < (int)this.numericUpDown_precison.Value; i++)
+                {
+                    twinRangeFitness /= 10;
+                }
+                twinRangeFitness = _bestValue.Fitness - twinRangeFitness;
+                foreach (FitnessPoint fitnessPoint in myListOfFitnessPoints)
+                {
+                    if (Math.Round(fitnessPoint.Fitness, (int)this.numericUpDown_precison.Value, MidpointRounding.AwayFromZero) <= _bestValue.Fitness &&
+                        Math.Round(fitnessPoint.Fitness, (int)this.numericUpDown_precison.Value, MidpointRounding.AwayFromZero) >= twinRangeFitness)
+                    {
+                        this.myDisplayFunction3D.AddPoint(fitnessPoint.Axis.Values[0], fitnessPoint.Axis.Values[1], Color.White, 6);
+                    }
+                }
+                this.myDisplayFunction3D.AddPoint(_bestValue.Axis.Values[0], _bestValue.Axis.Values[1], Color.Purple, 10);
             }
             this.button_search.Enabled = true;
         }
@@ -383,35 +422,22 @@ namespace OptimizationAlpha
 
         private void AddResult(string s)
         {
-            listBox_results.Items.Add(s);
+            listView_results.Items.Add(s);
         }
 
-        private void AddResult(double val, List<double> values)
+        private void AddResult(double val, List<double> values, Color color)
         {
-            string valuesToShow = string.Empty;
-
-            List<string> symbols = new List<string> { "x", "y", "z" };
+            ListViewItem listViewItem = new ListViewItem(Math.Round(val, (int)this.numericUpDown_precison.Value, MidpointRounding.AwayFromZero).ToString());
 
             for (int i = 0; i < values.Count; i++)
             {
-                valuesToShow += symbols[i] + ": " + Math.Round(values[i], 2, MidpointRounding.AwayFromZero).ToString() + " ";
+                listViewItem.SubItems.Add(Math.Round(values[i], (int)this.numericUpDown_precison.Value, MidpointRounding.AwayFromZero).ToString());
             }
-
-            listBox_results.Items.Add($"Result for given function: {Math.Round(val, 2, MidpointRounding.AwayFromZero)} for: {valuesToShow}");
-        }
-
-        private void AddBestResult(double bestVal, List<double> values)
-        {
-            string valuesToShow = string.Empty;
-
-            List<string> symbols = new List<string> { "x", "y", "z" };
-
-            for (int i = 0; i < values.Count; i++)
+            this.listView_results.Items.Add(listViewItem);
+            if (color != Color.White)
             {
-                valuesToShow += symbols[i] + ": " + Math.Round(values[i], 2, MidpointRounding.AwayFromZero).ToString() + " ";
+                this.listView_results.Items[this.listView_results.Items.Count - 1].BackColor = color;
             }
-
-            bestResultLabel.Text = ($"Best result in {Math.Round(bestVal, 2, MidpointRounding.AwayFromZero)} for: {valuesToShow}");
         }
 
         private bool ValidateRangeValues(decimal valueFrom, decimal valueTo)
@@ -493,154 +519,9 @@ namespace OptimizationAlpha
 
         }
 
-        private void textBox_range_from_KeyPress(object sender, KeyPressEventArgs e)
+        private void button_debug_Click(object sender, EventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
-            {
-                e.Handled = true;
-            }
-            // allow Backspace  
-            if (e.KeyChar == (char)8)
-            {
-                e.Handled = false;
-            }
-            // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
-            {
-                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
-                {
-                    e.Handled = false;
-                }
-                else
-                {
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void textBox_range_to_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
-            {
-                e.Handled = true;
-            }
-            // allow Backspace  
-            if (e.KeyChar == (char)8)
-            {
-                e.Handled = false;
-            }
-            // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
-            {
-                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
-                {
-                    e.Handled = false;
-                }
-                else
-                {
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void textBox_Y_range_from_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
-            {
-                e.Handled = true;
-            }
-            // allow Backspace  
-            if (e.KeyChar == (char)8)
-            {
-                e.Handled = false;
-            }
-            // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
-            {
-                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
-                {
-                    e.Handled = false;
-                }
-                else
-                {
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void textBox_Z_range_from_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
-            {
-                e.Handled = true;
-            }
-            // allow Backspace  
-            if (e.KeyChar == (char)8)
-            {
-                e.Handled = false;
-            }
-            // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
-            {
-                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
-                {
-                    e.Handled = false;
-                }
-                else
-                {
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void textBox_Y_range_to_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
-            {
-                e.Handled = true;
-            }
-            // allow Backspace  
-            if (e.KeyChar == (char)8)
-            {
-                e.Handled = false;
-            }
-            // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
-            {
-                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
-                {
-                    e.Handled = false;
-                }
-                else
-                {
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void textBox_Z_range_to_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && (!char.IsDigit(e.KeyChar)) && (e.KeyChar != '-'))
-            {
-                e.Handled = true;
-            }
-            // allow Backspace  
-            if (e.KeyChar == (char)8)
-            {
-                e.Handled = false;
-            }
-            // only allow minus sign at the beginning
-            if (e.KeyChar == '-' && (sender as TextBox).Text.Length > 0)
-            {
-                if ((sender as TextBox).SelectionStart == 0 && !(sender as TextBox).Text.Contains("-"))
-                {
-                    e.Handled = false;
-                }
-                else
-                {
-                    e.Handled = true;
-                }
-            }
+            this.listBox_help.Items.Add(this.listView_results.Items.Count);
         }
     }
 }
