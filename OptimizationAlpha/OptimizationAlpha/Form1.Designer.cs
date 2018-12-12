@@ -38,7 +38,14 @@
             this.tabPage_2d = new System.Windows.Forms.TabPage();
             this.myChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage_3d = new System.Windows.Forms.TabPage();
+            this.panel_3D = new DisplayFunction.FPanel();
             this.groupBox_functions = new System.Windows.Forms.GroupBox();
+            this.numericUpDown_Z_range_to = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Y_range_to = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Z_range_from = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Y_range_from = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_X_range_to = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_X_range_from = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -51,33 +58,24 @@
             this.radioButton_one_var = new System.Windows.Forms.RadioButton();
             this.button_search = new System.Windows.Forms.Button();
             this.button_read_from_file = new System.Windows.Forms.Button();
-            this.numericUpDown_X_range_from = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown_X_range_to = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown_Y_range_from = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown_Z_range_from = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown_Y_range_to = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown_Z_range_to = new System.Windows.Forms.NumericUpDown();
-            this.button_debug = new System.Windows.Forms.Button();
             this.listView_results = new System.Windows.Forms.ListView();
-            this.listBox_help = new System.Windows.Forms.ListBox();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.numericUpDown_precison = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
-            this.panel_3D = new DisplayFunction.FPanel();
             this.tabControl_chart.SuspendLayout();
             this.tabPage_2d.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.myChart)).BeginInit();
             this.tabPage_3d.SuspendLayout();
             this.groupBox_functions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_from)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_to)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_from)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_from)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_to)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_to)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_to)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_from)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_from)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_to)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_from)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_precison)).BeginInit();
             this.SuspendLayout();
             // 
@@ -159,6 +157,17 @@
             this.tabPage_3d.UseVisualStyleBackColor = true;
             this.tabPage_3d.Click += new System.EventHandler(this.tabPage_3d_Click);
             // 
+            // panel_3D
+            // 
+            this.panel_3D.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_3D.ColorBackgroundAxisStep = 3;
+            this.panel_3D.Location = new System.Drawing.Point(8, 9);
+            this.panel_3D.Name = "panel_3D";
+            this.panel_3D.Size = new System.Drawing.Size(811, 622);
+            this.panel_3D.TabIndex = 0;
+            // 
             // groupBox_functions
             // 
             this.groupBox_functions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -184,6 +193,114 @@
             this.groupBox_functions.TabIndex = 0;
             this.groupBox_functions.TabStop = false;
             this.groupBox_functions.Text = "Search function";
+            // 
+            // numericUpDown_Z_range_to
+            // 
+            this.numericUpDown_Z_range_to.DecimalPlaces = 2;
+            this.numericUpDown_Z_range_to.Location = new System.Drawing.Point(267, 140);
+            this.numericUpDown_Z_range_to.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_Z_range_to.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_Z_range_to.Name = "numericUpDown_Z_range_to";
+            this.numericUpDown_Z_range_to.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_Z_range_to.TabIndex = 28;
+            // 
+            // numericUpDown_Y_range_to
+            // 
+            this.numericUpDown_Y_range_to.DecimalPlaces = 2;
+            this.numericUpDown_Y_range_to.Location = new System.Drawing.Point(267, 104);
+            this.numericUpDown_Y_range_to.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_Y_range_to.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_Y_range_to.Name = "numericUpDown_Y_range_to";
+            this.numericUpDown_Y_range_to.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_Y_range_to.TabIndex = 27;
+            // 
+            // numericUpDown_Z_range_from
+            // 
+            this.numericUpDown_Z_range_from.DecimalPlaces = 2;
+            this.numericUpDown_Z_range_from.Location = new System.Drawing.Point(136, 140);
+            this.numericUpDown_Z_range_from.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_Z_range_from.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_Z_range_from.Name = "numericUpDown_Z_range_from";
+            this.numericUpDown_Z_range_from.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_Z_range_from.TabIndex = 26;
+            // 
+            // numericUpDown_Y_range_from
+            // 
+            this.numericUpDown_Y_range_from.DecimalPlaces = 2;
+            this.numericUpDown_Y_range_from.Location = new System.Drawing.Point(136, 102);
+            this.numericUpDown_Y_range_from.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_Y_range_from.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_Y_range_from.Name = "numericUpDown_Y_range_from";
+            this.numericUpDown_Y_range_from.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_Y_range_from.TabIndex = 25;
+            // 
+            // numericUpDown_X_range_to
+            // 
+            this.numericUpDown_X_range_to.DecimalPlaces = 2;
+            this.numericUpDown_X_range_to.Location = new System.Drawing.Point(267, 68);
+            this.numericUpDown_X_range_to.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_X_range_to.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_X_range_to.Name = "numericUpDown_X_range_to";
+            this.numericUpDown_X_range_to.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_X_range_to.TabIndex = 24;
+            // 
+            // numericUpDown_X_range_from
+            // 
+            this.numericUpDown_X_range_from.DecimalPlaces = 2;
+            this.numericUpDown_X_range_from.Location = new System.Drawing.Point(136, 68);
+            this.numericUpDown_X_range_from.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_X_range_from.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_X_range_from.Name = "numericUpDown_X_range_from";
+            this.numericUpDown_X_range_from.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_X_range_from.TabIndex = 23;
             // 
             // label6
             // 
@@ -321,125 +438,6 @@
             this.button_read_from_file.UseVisualStyleBackColor = true;
             this.button_read_from_file.Click += new System.EventHandler(this.button_read_from_file_Click);
             // 
-            // numericUpDown_X_range_from
-            // 
-            this.numericUpDown_X_range_from.DecimalPlaces = 2;
-            this.numericUpDown_X_range_from.Location = new System.Drawing.Point(136, 68);
-            this.numericUpDown_X_range_from.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericUpDown_X_range_from.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown_X_range_from.Name = "numericUpDown_X_range_from";
-            this.numericUpDown_X_range_from.Size = new System.Drawing.Size(99, 20);
-            this.numericUpDown_X_range_from.TabIndex = 23;
-            // 
-            // numericUpDown_X_range_to
-            // 
-            this.numericUpDown_X_range_to.DecimalPlaces = 2;
-            this.numericUpDown_X_range_to.Location = new System.Drawing.Point(267, 68);
-            this.numericUpDown_X_range_to.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericUpDown_X_range_to.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown_X_range_to.Name = "numericUpDown_X_range_to";
-            this.numericUpDown_X_range_to.Size = new System.Drawing.Size(99, 20);
-            this.numericUpDown_X_range_to.TabIndex = 24;
-            // 
-            // numericUpDown_Y_range_from
-            // 
-            this.numericUpDown_Y_range_from.DecimalPlaces = 2;
-            this.numericUpDown_Y_range_from.Location = new System.Drawing.Point(136, 102);
-            this.numericUpDown_Y_range_from.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericUpDown_Y_range_from.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown_Y_range_from.Name = "numericUpDown_Y_range_from";
-            this.numericUpDown_Y_range_from.Size = new System.Drawing.Size(99, 20);
-            this.numericUpDown_Y_range_from.TabIndex = 25;
-            // 
-            // numericUpDown_Z_range_from
-            // 
-            this.numericUpDown_Z_range_from.DecimalPlaces = 2;
-            this.numericUpDown_Z_range_from.Location = new System.Drawing.Point(136, 140);
-            this.numericUpDown_Z_range_from.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericUpDown_Z_range_from.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown_Z_range_from.Name = "numericUpDown_Z_range_from";
-            this.numericUpDown_Z_range_from.Size = new System.Drawing.Size(99, 20);
-            this.numericUpDown_Z_range_from.TabIndex = 26;
-            // 
-            // numericUpDown_Y_range_to
-            // 
-            this.numericUpDown_Y_range_to.DecimalPlaces = 2;
-            this.numericUpDown_Y_range_to.Location = new System.Drawing.Point(267, 104);
-            this.numericUpDown_Y_range_to.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericUpDown_Y_range_to.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown_Y_range_to.Name = "numericUpDown_Y_range_to";
-            this.numericUpDown_Y_range_to.Size = new System.Drawing.Size(99, 20);
-            this.numericUpDown_Y_range_to.TabIndex = 27;
-            // 
-            // numericUpDown_Z_range_to
-            // 
-            this.numericUpDown_Z_range_to.DecimalPlaces = 2;
-            this.numericUpDown_Z_range_to.Location = new System.Drawing.Point(267, 140);
-            this.numericUpDown_Z_range_to.Maximum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            0});
-            this.numericUpDown_Z_range_to.Minimum = new decimal(new int[] {
-            500,
-            0,
-            0,
-            -2147483648});
-            this.numericUpDown_Z_range_to.Name = "numericUpDown_Z_range_to";
-            this.numericUpDown_Z_range_to.Size = new System.Drawing.Size(99, 20);
-            this.numericUpDown_Z_range_to.TabIndex = 28;
-            // 
-            // button_debug
-            // 
-            this.button_debug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_debug.Location = new System.Drawing.Point(887, 632);
-            this.button_debug.Name = "button_debug";
-            this.button_debug.Size = new System.Drawing.Size(75, 23);
-            this.button_debug.TabIndex = 15;
-            this.button_debug.Text = "button1";
-            this.button_debug.UseVisualStyleBackColor = true;
-            this.button_debug.Click += new System.EventHandler(this.button_debug_Click);
-            // 
             // listView_results
             // 
             this.listView_results.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -451,19 +449,10 @@
             this.columnHeader4});
             this.listView_results.Location = new System.Drawing.Point(892, 275);
             this.listView_results.Name = "listView_results";
-            this.listView_results.Size = new System.Drawing.Size(377, 351);
+            this.listView_results.Size = new System.Drawing.Size(377, 386);
             this.listView_results.TabIndex = 17;
             this.listView_results.UseCompatibleStateImageBehavior = false;
             this.listView_results.View = System.Windows.Forms.View.Details;
-            // 
-            // listBox_help
-            // 
-            this.listBox_help.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox_help.FormattingEnabled = true;
-            this.listBox_help.Location = new System.Drawing.Point(968, 631);
-            this.listBox_help.Name = "listBox_help";
-            this.listBox_help.Size = new System.Drawing.Size(301, 30);
-            this.listBox_help.TabIndex = 18;
             // 
             // columnHeader1
             // 
@@ -519,17 +508,6 @@
             this.label3.TabIndex = 20;
             this.label3.Text = "Precision:";
             // 
-            // panel_3D
-            // 
-            this.panel_3D.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel_3D.ColorBackgroundAxisStep = 3;
-            this.panel_3D.Location = new System.Drawing.Point(8, 9);
-            this.panel_3D.Name = "panel_3D";
-            this.panel_3D.Size = new System.Drawing.Size(811, 622);
-            this.panel_3D.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -537,9 +515,7 @@
             this.ClientSize = new System.Drawing.Size(1281, 665);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.numericUpDown_precison);
-            this.Controls.Add(this.listBox_help);
             this.Controls.Add(this.listView_results);
-            this.Controls.Add(this.button_debug);
             this.Controls.Add(this.button_read_from_file);
             this.Controls.Add(this.button_search);
             this.Controls.Add(this.groupBox_functions);
@@ -557,12 +533,12 @@
             this.tabPage_3d.ResumeLayout(false);
             this.groupBox_functions.ResumeLayout(false);
             this.groupBox_functions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_from)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_to)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_from)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_from)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_to)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_to)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_to)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_from)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_from)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_to)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_from)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_precison)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -597,9 +573,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown_Y_range_from;
         private System.Windows.Forms.NumericUpDown numericUpDown_X_range_to;
         private System.Windows.Forms.NumericUpDown numericUpDown_X_range_from;
-        private System.Windows.Forms.Button button_debug;
         private System.Windows.Forms.ListView listView_results;
-        private System.Windows.Forms.ListBox listBox_help;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;

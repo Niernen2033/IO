@@ -44,10 +44,6 @@ namespace OptimizationAlpha
             this.numericUpDown_Y_range_to.Enabled = false;
             this.numericUpDown_Z_range_from.Enabled = false;
             this.numericUpDown_Z_range_to.Enabled = false;
-
-            //tests
-            this.button_help.Visible = true;
-            this.listBox_help.Visible = true;
         }
 
         private void textBox_function_Text_Click(object sender, EventArgs e)
@@ -517,11 +513,6 @@ namespace OptimizationAlpha
             }
 
 
-        }
-
-        private void button_debug_Click(object sender, EventArgs e)
-        {
-            this.listBox_help.Items.Add(this.listView_results.Items.Count);
         }
     }
 }
