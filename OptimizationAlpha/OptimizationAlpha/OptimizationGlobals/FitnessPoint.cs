@@ -23,10 +23,9 @@ namespace OptimizationGlobals
             this.Fitness = fitness;
         }
 
-        public FitnessPoint(ref FitnessPoint fitnessPoint)
+        public FitnessPoint(FitnessPoint fitnessPoint)
         {
-            Vector myVector = this.Axis;
-            this.Axis = new Vector(ref myVector);
+            this.Axis = new Vector(fitnessPoint.Axis);
             this.Fitness = fitnessPoint.Fitness;
         }
         public int CompareTo(FitnessPoint other)

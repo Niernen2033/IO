@@ -26,13 +26,29 @@ namespace OptimizationAlpha
         public Form1()
         {
             InitializeComponent();
+            PostInitializeComponent();
             //disable legend in chart
             myChart.Series[0].IsVisibleInLegend = false;
         }
 
+        private void PostInitializeComponent()
+        {
+            this.numericUpDown_X_range_from.Enabled = false;
+            this.numericUpDown_X_range_to.Enabled = false;
+            this.numericUpDown_Y_range_from.Enabled = false;
+            this.numericUpDown_Y_range_to.Enabled = false;
+            this.numericUpDown_Z_range_from.Enabled = false;
+            this.numericUpDown_Z_range_to.Enabled = false;
+        }
+
         private void textBox_function_Text_Click(object sender, EventArgs e)
         {
-            textBox_function.Text = "";
+            if (this.textBox_function.Text.Contains("f(x)=") ||
+                this.textBox_function.Text.Contains("f(x, y)=") ||
+                this.textBox_function.Text.Contains("f(x, y, z)="))
+            {
+                textBox_function.Text = "";
+            }
         }
 
         private void textBox_function_Leave(object sender, EventArgs e)
@@ -72,38 +88,94 @@ namespace OptimizationAlpha
             switch (listBox_variables.SelectedIndex)
             {
                 case 0:
-                    textBox_X_range_from.Enabled = true;
-                    textBox_X_range_to.Enabled = true;
-                    textBox_Y_range_from.Enabled = false;
-                    textBox_Y_range_to.Enabled = false;
-                    textBox_Z_range_from.Enabled = false;
-                    textBox_Z_range_to.Enabled = false;
+                    this.numericUpDown_X_range_from.Enabled = true;
+                    this.numericUpDown_X_range_to.Enabled = true;
+                    this.numericUpDown_Y_range_from.Enabled = false;
+                    this.numericUpDown_Y_range_to.Enabled = false;
+                    this.numericUpDown_Z_range_from.Enabled = false;
+                    this.numericUpDown_Z_range_to.Enabled = false;
                     this.button_read_from_file.Enabled = true;
                     break;
                 case 1:
-                    textBox_X_range_from.Enabled = true;
-                    textBox_X_range_to.Enabled = true;
-                    textBox_Y_range_from.Enabled = true;
-                    textBox_Y_range_to.Enabled = true;
-                    textBox_Z_range_from.Enabled = false;
-                    textBox_Z_range_to.Enabled = false;
+                    this.numericUpDown_X_range_from.Enabled = true;
+                    this.numericUpDown_X_range_to.Enabled = true;
+                    this.numericUpDown_Y_range_from.Enabled = true;
+                    this.numericUpDown_Y_range_to.Enabled = true;
+                    this.numericUpDown_Z_range_from.Enabled = false;
+                    this.numericUpDown_Z_range_to.Enabled = false;
                     this.button_read_from_file.Enabled = false;
                     break;
                 case 2:
-                    textBox_X_range_from.Enabled = true;
-                    textBox_X_range_to.Enabled = true;
-                    textBox_Y_range_from.Enabled = true;
-                    textBox_Y_range_to.Enabled = true;
-                    textBox_Z_range_from.Enabled = true;
-                    textBox_Z_range_to.Enabled = true;
+                    this.numericUpDown_X_range_from.Enabled = true;
+                    this.numericUpDown_X_range_to.Enabled = true;
+                    this.numericUpDown_Y_range_from.Enabled = true;
+                    this.numericUpDown_Y_range_to.Enabled = true;
+                    this.numericUpDown_Z_range_from.Enabled = true;
+                    this.numericUpDown_Z_range_to.Enabled = true;
                     this.button_read_from_file.Enabled = false;
                     break;
             }
 
         }
 
+        private FitnessPoint FindBestPointInRange(AlgorithmType algorithmType, List<FitnessPoint> options, params Compartment[] compartments)
+        {
+            FitnessPoint result = null;
+            FitnessPoint tempResult = null;
+
+            int numberOfRanges = compartments.Length;
+
+            List<FitnessPoint> cloneOptions = new List<FitnessPoint>(options);
+            switch (algorithmType)
+            {
+                case AlgorithmType.Maximum:
+                    {
+                        FitnessPoint tempBest = cloneOptions.Max();
+                        for (int i = 0; i < numberOfRanges; i++)
+                        {
+                            if(tempBest.Axis.Values[i] >= compartments[i].Min && tempBest.Axis.Values[i] <= compartments[i].Max)
+                            {
+                                tempResult = new FitnessPoint(tempBest);
+                            }
+                            else
+                            {
+                                i = -1;
+                                cloneOptions.Remove(tempBest);
+                                tempBest = cloneOptions.Max();
+                                tempResult = null;
+                            }
+                        }
+                        result = tempResult;
+                        break;
+                    }
+                case AlgorithmType.Minimum:
+                    {
+                        FitnessPoint tempBest = cloneOptions.Min();
+                        for (int i = 0; i < numberOfRanges; i++)
+                        {
+                            if (tempBest.Axis.Values[i] >= compartments[i].Min && tempBest.Axis.Values[i] <= compartments[i].Max)
+                            {
+                                tempResult = new FitnessPoint(tempBest);
+                            }
+                            else
+                            {
+                                i = -1;
+                                cloneOptions.Remove(tempBest);
+                                tempBest = cloneOptions.Min();
+                                tempResult = null;
+                            }
+                        }
+                        result = tempResult;
+                        break;
+                    }
+            }
+
+            return result;
+        }
+
         private async void button_search_Click(object sender, EventArgs e)
         {
+            this.button_search.Enabled = false;
             // CODE FOR SEARCHING MIN/MAX ALGHORITM
             // clear listbox results
             listBox_results.Items.Clear();
@@ -128,20 +200,44 @@ namespace OptimizationAlpha
             {
                 case 1:
                     {
-                        ValidateRangeValues(textBox_X_range_from, textBox_X_range_to);
+                        if(!ValidateRangeValues(this.numericUpDown_X_range_from.Value, this.numericUpDown_X_range_to.Value))
+                        {
+                            this.button_search.Enabled = true;
+                            return;
+                        }
                         break;
                     }
                 case 2:
                     {
-                        ValidateRangeValues(textBox_X_range_from, textBox_X_range_to);
-                        ValidateRangeValues(textBox_Y_range_from, textBox_Y_range_to);
+                        if(!ValidateRangeValues(this.numericUpDown_X_range_from.Value, this.numericUpDown_X_range_to.Value))
+                        {
+                            this.button_search.Enabled = true;
+                            return;
+                        }
+                        if(!ValidateRangeValues(this.numericUpDown_Y_range_from.Value, this.numericUpDown_Y_range_to.Value))
+                        {
+                            this.button_search.Enabled = true;
+                            return;
+                        }
                         break;
                     }
                 case 3:
                     {
-                        ValidateRangeValues(textBox_X_range_from, textBox_X_range_to);
-                        ValidateRangeValues(textBox_Y_range_from, textBox_Y_range_to);
-                        ValidateRangeValues(textBox_Z_range_from, textBox_Z_range_to);
+                        if(!ValidateRangeValues(this.numericUpDown_X_range_from.Value, this.numericUpDown_X_range_to.Value))
+                        {
+                            this.button_search.Enabled = true;
+                            return;
+                        }
+                        if(!ValidateRangeValues(this.numericUpDown_Y_range_from.Value, this.numericUpDown_Y_range_to.Value))
+                        {
+                            this.button_search.Enabled = true;
+                            return;
+                        }
+                        if(!ValidateRangeValues(this.numericUpDown_Z_range_from.Value, this.numericUpDown_Z_range_to.Value))
+                        {
+                            this.button_search.Enabled = true;
+                            return;
+                        }
                         break;
                     }
                 default:
@@ -157,13 +253,28 @@ namespace OptimizationAlpha
                     // find list of fitness points
                     myListOfFitnessPoints = await myHeuristicAlgorithms.GetAllOptimalPointsAsync(_myAlgorithmType, _myFunctionExpression, _myArgumentsSymbol, _myRanges);
                     // find best fitness point (minimum or maximum)
-                    if (_myAlgorithmType == AlgorithmType.Minimum)
+                    switch(_myArgumentsSymbol.Count)
                     {
-                        _bestValue = myListOfFitnessPoints.Min();
-                    }
-                    else
-                    {
-                        _bestValue = myListOfFitnessPoints.Max();
+                        case 1:
+                            {
+                                _bestValue = this.FindBestPointInRange(_myAlgorithmType, myListOfFitnessPoints, new Compartment((double)this.numericUpDown_X_range_from.Value, (double)this.numericUpDown_X_range_to.Value));
+                                break;
+                            }
+                        case 2:
+                            {
+                                _bestValue = this.FindBestPointInRange(_myAlgorithmType, myListOfFitnessPoints, 
+                                    new Compartment((double)this.numericUpDown_X_range_from.Value, (double)this.numericUpDown_X_range_to.Value),
+                                    new Compartment((double)this.numericUpDown_Y_range_from.Value, (double)this.numericUpDown_Y_range_to.Value));
+                                break;
+                            }
+                        case 3:
+                            {
+                                _bestValue = this.FindBestPointInRange(_myAlgorithmType, myListOfFitnessPoints,
+                                    new Compartment((double)this.numericUpDown_X_range_from.Value, (double)this.numericUpDown_X_range_to.Value),
+                                    new Compartment((double)this.numericUpDown_Y_range_from.Value, (double)this.numericUpDown_Y_range_to.Value),
+                                    new Compartment((double)this.numericUpDown_Z_range_from.Value, (double)this.numericUpDown_Z_range_to.Value));
+                                break;
+                            }
                     }
 
                 }
@@ -190,11 +301,13 @@ namespace OptimizationAlpha
                             AddResult("Bad ranges");
                             break;
                     }
+                    this.button_search.Enabled = true;
+                    return;
                 }
 
                 foreach (var item in myListOfFitnessPoints)
                 {
-                    AddResult(item.Fitness);
+                    AddResult(item.Fitness, item.Axis.Values);
                 }
 
                 AddBestResult(_bestValue.Fitness, _bestValue.Axis.Values);
@@ -235,6 +348,7 @@ namespace OptimizationAlpha
                 // show function graph
                 await myDisplayFunction3D.GraphAync(_axisXRange, _axisYRange);
             }
+            this.button_search.Enabled = true;
         }
 
         bool IsDigitsOnly(string str)
@@ -272,9 +386,18 @@ namespace OptimizationAlpha
             listBox_results.Items.Add(s);
         }
 
-        private void AddResult(double val)
+        private void AddResult(double val, List<double> values)
         {
-            listBox_results.Items.Add($"Result for given function: {Math.Round(val, 2, MidpointRounding.AwayFromZero)}");
+            string valuesToShow = string.Empty;
+
+            List<string> symbols = new List<string> { "x", "y", "z" };
+
+            for (int i = 0; i < values.Count; i++)
+            {
+                valuesToShow += symbols[i] + ": " + Math.Round(values[i], 2, MidpointRounding.AwayFromZero).ToString() + " ";
+            }
+
+            listBox_results.Items.Add($"Result for given function: {Math.Round(val, 2, MidpointRounding.AwayFromZero)} for: {valuesToShow}");
         }
 
         private void AddBestResult(double bestVal, List<double> values)
@@ -291,29 +414,17 @@ namespace OptimizationAlpha
             bestResultLabel.Text = ($"Best result in {Math.Round(bestVal, 2, MidpointRounding.AwayFromZero)} for: {valuesToShow}");
         }
 
-        private void ValidateRangeValues(TextBox textBoxFrom, TextBox textBoxTo)
+        private bool ValidateRangeValues(decimal valueFrom, decimal valueTo)
         {
-            int FromValue, ToValue;
-
-            if (textBoxFrom.Text == string.Empty ||
-                textBoxTo.Text == string.Empty)
-            {
-                MessageBox.Show("From value or to value can not be empty. Try again");
-                return;
-            }
-
-            FromValue = int.Parse(textBoxFrom.Text);
-            ToValue = int.Parse(textBoxTo.Text);
-
-            if (FromValue >= ToValue)
+            if (valueFrom >= valueTo)
             {
                 MessageBox.Show("From value can not be higher than to value. Try again");
-                return;
+                return false;
             }
             else
             {
-                _myRanges.Add(new Compartment(FromValue, ToValue));
-                return;
+                _myRanges.Add(new Compartment((double)valueFrom, (double)valueTo));
+                return true;
             }
         }
 

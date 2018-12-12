@@ -38,21 +38,14 @@
             this.tabPage_2d = new System.Windows.Forms.TabPage();
             this.myChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabPage_3d = new System.Windows.Forms.TabPage();
-            this.panel_3D = new DisplayFunction.FPanel();
             this.listBox_results = new System.Windows.Forms.ListBox();
             this.groupBox_functions = new System.Windows.Forms.GroupBox();
-            this.textBox_Z_range_to = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox_Z_range_from = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox_Y_range_to = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox_Y_range_from = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox_X_range_to = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.radioButton_two_var = new System.Windows.Forms.RadioButton();
-            this.textBox_X_range_from = new System.Windows.Forms.TextBox();
             this.button_help = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBox_variables = new System.Windows.Forms.ListBox();
@@ -62,12 +55,25 @@
             this.bestResultLabel = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.numericUpDown_X_range_from = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_X_range_to = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Y_range_from = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Z_range_from = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Y_range_to = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_Z_range_to = new System.Windows.Forms.NumericUpDown();
+            this.panel_3D = new DisplayFunction.FPanel();
             this.tabControl_chart.SuspendLayout();
             this.tabPage_2d.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.myChart)).BeginInit();
             this.tabPage_3d.SuspendLayout();
             this.groupBox_functions.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_from)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_to)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_from)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_from)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_to)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_to)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox_function
@@ -148,17 +154,6 @@
             this.tabPage_3d.UseVisualStyleBackColor = true;
             this.tabPage_3d.Click += new System.EventHandler(this.tabPage_3d_Click);
             // 
-            // panel_3D
-            // 
-            this.panel_3D.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel_3D.ColorBackgroundAxisStep = 3;
-            this.panel_3D.Location = new System.Drawing.Point(8, 9);
-            this.panel_3D.Name = "panel_3D";
-            this.panel_3D.Size = new System.Drawing.Size(811, 622);
-            this.panel_3D.TabIndex = 0;
-            // 
             // listBox_results
             // 
             this.listBox_results.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -172,18 +167,18 @@
             // groupBox_functions
             // 
             this.groupBox_functions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox_functions.Controls.Add(this.textBox_Z_range_to);
+            this.groupBox_functions.Controls.Add(this.numericUpDown_Z_range_to);
+            this.groupBox_functions.Controls.Add(this.numericUpDown_Y_range_to);
+            this.groupBox_functions.Controls.Add(this.numericUpDown_Z_range_from);
+            this.groupBox_functions.Controls.Add(this.numericUpDown_Y_range_from);
+            this.groupBox_functions.Controls.Add(this.numericUpDown_X_range_to);
+            this.groupBox_functions.Controls.Add(this.numericUpDown_X_range_from);
             this.groupBox_functions.Controls.Add(this.label6);
-            this.groupBox_functions.Controls.Add(this.textBox_Z_range_from);
             this.groupBox_functions.Controls.Add(this.label7);
-            this.groupBox_functions.Controls.Add(this.textBox_Y_range_to);
             this.groupBox_functions.Controls.Add(this.label4);
-            this.groupBox_functions.Controls.Add(this.textBox_Y_range_from);
             this.groupBox_functions.Controls.Add(this.label5);
-            this.groupBox_functions.Controls.Add(this.textBox_X_range_to);
             this.groupBox_functions.Controls.Add(this.label2);
             this.groupBox_functions.Controls.Add(this.radioButton_two_var);
-            this.groupBox_functions.Controls.Add(this.textBox_X_range_from);
             this.groupBox_functions.Controls.Add(this.button_help);
             this.groupBox_functions.Controls.Add(this.label1);
             this.groupBox_functions.Controls.Add(this.listBox_variables);
@@ -194,15 +189,6 @@
             this.groupBox_functions.TabIndex = 0;
             this.groupBox_functions.TabStop = false;
             this.groupBox_functions.Text = "Search function";
-            // 
-            // textBox_Z_range_to
-            // 
-            this.textBox_Z_range_to.Enabled = false;
-            this.textBox_Z_range_to.Location = new System.Drawing.Point(276, 140);
-            this.textBox_Z_range_to.Name = "textBox_Z_range_to";
-            this.textBox_Z_range_to.Size = new System.Drawing.Size(100, 20);
-            this.textBox_Z_range_to.TabIndex = 23;
-            this.textBox_Z_range_to.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Z_range_to_KeyPress);
             // 
             // label6
             // 
@@ -215,15 +201,6 @@
             this.label6.Text = "to: ";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox_Z_range_from
-            // 
-            this.textBox_Z_range_from.Enabled = false;
-            this.textBox_Z_range_from.Location = new System.Drawing.Point(135, 140);
-            this.textBox_Z_range_from.Name = "textBox_Z_range_from";
-            this.textBox_Z_range_from.Size = new System.Drawing.Size(100, 20);
-            this.textBox_Z_range_from.TabIndex = 21;
-            this.textBox_Z_range_from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Z_range_from_KeyPress);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -233,15 +210,6 @@
             this.label7.Size = new System.Drawing.Size(129, 18);
             this.label7.TabIndex = 20;
             this.label7.Text = "Range for Z from: ";
-            // 
-            // textBox_Y_range_to
-            // 
-            this.textBox_Y_range_to.Enabled = false;
-            this.textBox_Y_range_to.Location = new System.Drawing.Point(276, 102);
-            this.textBox_Y_range_to.Name = "textBox_Y_range_to";
-            this.textBox_Y_range_to.Size = new System.Drawing.Size(100, 20);
-            this.textBox_Y_range_to.TabIndex = 19;
-            this.textBox_Y_range_to.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Y_range_to_KeyPress);
             // 
             // label4
             // 
@@ -254,15 +222,6 @@
             this.label4.Text = "to: ";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox_Y_range_from
-            // 
-            this.textBox_Y_range_from.Enabled = false;
-            this.textBox_Y_range_from.Location = new System.Drawing.Point(135, 102);
-            this.textBox_Y_range_from.Name = "textBox_Y_range_from";
-            this.textBox_Y_range_from.Size = new System.Drawing.Size(100, 20);
-            this.textBox_Y_range_from.TabIndex = 17;
-            this.textBox_Y_range_from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Y_range_from_KeyPress);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -272,15 +231,6 @@
             this.label5.Size = new System.Drawing.Size(129, 18);
             this.label5.TabIndex = 16;
             this.label5.Text = "Range for Y from: ";
-            // 
-            // textBox_X_range_to
-            // 
-            this.textBox_X_range_to.Enabled = false;
-            this.textBox_X_range_to.Location = new System.Drawing.Point(276, 68);
-            this.textBox_X_range_to.Name = "textBox_X_range_to";
-            this.textBox_X_range_to.Size = new System.Drawing.Size(100, 20);
-            this.textBox_X_range_to.TabIndex = 15;
-            this.textBox_X_range_to.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_range_to_KeyPress);
             // 
             // label2
             // 
@@ -303,15 +253,6 @@
             this.radioButton_two_var.Text = "maximum";
             this.radioButton_two_var.UseVisualStyleBackColor = true;
             this.radioButton_two_var.CheckedChanged += new System.EventHandler(this.radioButton_two_var_CheckedChanged);
-            // 
-            // textBox_X_range_from
-            // 
-            this.textBox_X_range_from.Enabled = false;
-            this.textBox_X_range_from.Location = new System.Drawing.Point(135, 68);
-            this.textBox_X_range_from.Name = "textBox_X_range_from";
-            this.textBox_X_range_from.Size = new System.Drawing.Size(100, 20);
-            this.textBox_X_range_from.TabIndex = 13;
-            this.textBox_X_range_from.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_range_from_KeyPress);
             // 
             // button_help
             // 
@@ -423,6 +364,125 @@
             this.panel1.Size = new System.Drawing.Size(382, 33);
             this.panel1.TabIndex = 14;
             // 
+            // numericUpDown_X_range_from
+            // 
+            this.numericUpDown_X_range_from.DecimalPlaces = 2;
+            this.numericUpDown_X_range_from.Location = new System.Drawing.Point(136, 68);
+            this.numericUpDown_X_range_from.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_X_range_from.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_X_range_from.Name = "numericUpDown_X_range_from";
+            this.numericUpDown_X_range_from.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_X_range_from.TabIndex = 23;
+            // 
+            // numericUpDown_X_range_to
+            // 
+            this.numericUpDown_X_range_to.DecimalPlaces = 2;
+            this.numericUpDown_X_range_to.Location = new System.Drawing.Point(267, 68);
+            this.numericUpDown_X_range_to.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_X_range_to.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_X_range_to.Name = "numericUpDown_X_range_to";
+            this.numericUpDown_X_range_to.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_X_range_to.TabIndex = 24;
+            // 
+            // numericUpDown_Y_range_from
+            // 
+            this.numericUpDown_Y_range_from.DecimalPlaces = 2;
+            this.numericUpDown_Y_range_from.Location = new System.Drawing.Point(136, 102);
+            this.numericUpDown_Y_range_from.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_Y_range_from.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_Y_range_from.Name = "numericUpDown_Y_range_from";
+            this.numericUpDown_Y_range_from.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_Y_range_from.TabIndex = 25;
+            // 
+            // numericUpDown_Z_range_from
+            // 
+            this.numericUpDown_Z_range_from.DecimalPlaces = 2;
+            this.numericUpDown_Z_range_from.Location = new System.Drawing.Point(136, 140);
+            this.numericUpDown_Z_range_from.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_Z_range_from.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_Z_range_from.Name = "numericUpDown_Z_range_from";
+            this.numericUpDown_Z_range_from.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_Z_range_from.TabIndex = 26;
+            // 
+            // numericUpDown_Y_range_to
+            // 
+            this.numericUpDown_Y_range_to.DecimalPlaces = 2;
+            this.numericUpDown_Y_range_to.Location = new System.Drawing.Point(267, 104);
+            this.numericUpDown_Y_range_to.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_Y_range_to.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_Y_range_to.Name = "numericUpDown_Y_range_to";
+            this.numericUpDown_Y_range_to.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_Y_range_to.TabIndex = 27;
+            // 
+            // numericUpDown_Z_range_to
+            // 
+            this.numericUpDown_Z_range_to.DecimalPlaces = 2;
+            this.numericUpDown_Z_range_to.Location = new System.Drawing.Point(267, 140);
+            this.numericUpDown_Z_range_to.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.numericUpDown_Z_range_to.Minimum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            -2147483648});
+            this.numericUpDown_Z_range_to.Name = "numericUpDown_Z_range_to";
+            this.numericUpDown_Z_range_to.Size = new System.Drawing.Size(99, 20);
+            this.numericUpDown_Z_range_to.TabIndex = 28;
+            // 
+            // panel_3D
+            // 
+            this.panel_3D.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel_3D.ColorBackgroundAxisStep = 3;
+            this.panel_3D.Location = new System.Drawing.Point(8, 9);
+            this.panel_3D.Name = "panel_3D";
+            this.panel_3D.Size = new System.Drawing.Size(811, 622);
+            this.panel_3D.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -449,6 +509,12 @@
             this.groupBox_functions.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_from)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_X_range_to)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_from)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_from)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Y_range_to)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Z_range_to)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -471,21 +537,21 @@
         private System.Windows.Forms.ListBox listBox_results;
         private System.Windows.Forms.DataVisualization.Charting.Chart myChart;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox_X_range_from;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox_X_range_to;
         private System.Windows.Forms.Label bestResultLabel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox textBox_Z_range_to;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox_Z_range_from;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox_Y_range_to;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox_Y_range_from;
         private System.Windows.Forms.Label label5;
         private DisplayFunction.FPanel panel_3D;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Z_range_to;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Y_range_to;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Z_range_from;
+        private System.Windows.Forms.NumericUpDown numericUpDown_Y_range_from;
+        private System.Windows.Forms.NumericUpDown numericUpDown_X_range_to;
+        private System.Windows.Forms.NumericUpDown numericUpDown_X_range_from;
     }
 }
 

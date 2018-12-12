@@ -32,7 +32,7 @@ namespace OptimizationGlobals
             this.Values = new List<double>(values);
         }
 
-        public Vector(ref Vector vector)
+        public Vector(Vector vector)
         {
             this.Values = new List<double>(vector.Values);
         }
