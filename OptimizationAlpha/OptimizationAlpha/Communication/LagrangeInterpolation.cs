@@ -115,43 +115,50 @@ namespace Communication
             string temp_expression = string.Empty;
             double sum_expression = 1.0;
 
-            for (int j = 0; j < this.vectors.Count; j++)
+            try
             {
-                for (int i = 0; i < this.vectors.Count; i++)
+                for (int j = 0; j < this.vectors.Count; j++)
                 {
-                    if (i != j)
+                    for (int i = 0; i < this.vectors.Count; i++)
                     {
-                        if (this.vectors[j].Values[0] < 0)
+                        if (i != j)
                         {
-                            temp_expression += ("(x+" + (-this.vectors[j].Values[0]).ToString() + ")");
+                            if (this.vectors[j].Values[0] < 0)
+                            {
+                                temp_expression += ("(x+" + (-this.vectors[j].Values[0]).ToString() + ")");
+                            }
+                            else
+                            {
+                                temp_expression += ("(x-" + (this.vectors[j].Values[0]).ToString() + ")");
+                            }
+                            sum_expression = sum_expression * ((this.vectors[i].Values[0]) - (this.vectors[j].Values[0]));
+                            temp_expression += (" * ");
                         }
-                        else
-                        {
-                            temp_expression += ("(x-" + (this.vectors[j].Values[0]).ToString() + ")");
-                        }
-                        sum_expression = sum_expression * ((this.vectors[i].Values[0]) - (this.vectors[j].Values[0]));
-                        temp_expression += (" * ");
                     }
-                }
-                if (this.vectors[j].Values[1] < 0)
-                {
-                    temp_expression += ("(" + (this.vectors[j].Values[1]).ToString() + ")" + "/(" + sum_expression + ")");
-                }
-                else
-                {
-                    temp_expression += ((this.vectors[j].Values[1]).ToString() + "/(" + sum_expression + ")");
-                }
-                if (sum_expression == 0.0)
-                {
-                    temp_expression = ("Devariable x occurs twice - this is not the function!");
-                }
+                    if (this.vectors[j].Values[1] < 0)
+                    {
+                        temp_expression += ("(" + (this.vectors[j].Values[1]).ToString() + ")" + "/(" + sum_expression + ")");
+                    }
+                    else
+                    {
+                        temp_expression += ((this.vectors[j].Values[1]).ToString() + "/(" + sum_expression + ")");
+                    }
+                    if (sum_expression == 0.0)
+                    {
+                        temp_expression = ("Devariable x occurs twice - this is not the function!");
+                    }
 
-                if (j < this.vectors.Count - 1)
-                {
-                    temp_expression += (" + ");
-                }
+                    if (j < this.vectors.Count - 1)
+                    {
+                        temp_expression += (" + ");
+                    }
 
-                sum_expression = 1.0;
+                    sum_expression = 1.0;
+                }
+            }
+            catch
+            {
+                return false;
             }
 
             this.FunctionExpression = temp_expression.Replace(" ", "");

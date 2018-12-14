@@ -419,7 +419,7 @@ namespace OptimizationAlpha
 
         private void AddResult(string s)
         {
-            listView_results.Items.Add(s);
+            MessageBox.Show(s);
         }
 
         private void AddResult(double val, List<double> values, Color color)
