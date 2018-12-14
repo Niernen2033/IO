@@ -133,13 +133,12 @@ namespace DisplayFunction
             {
                 help_y = this.Center_Y.XY + (help_y * jump_y);
             }
-            this.points.Add(new FPointColor(help_x-1,help_y-1, size, color));
+            this.points.Add(new FPointColor(help_x- (int)Math.Floor(size / (decimal)2), help_y- (int)Math.Floor(size / (decimal)2), size, color));
         }
 
         public void ClearPoints()
         {
             this.points.Clear();
-            this.is_have_background = false;
         }
 
         public void ClearAll()
@@ -208,7 +207,7 @@ namespace DisplayFunction
             //points**********************
             foreach (FPointColor point in this.points)
             {
-                e.Graphics.FillRectangle(new SolidBrush(point.Color), new Rectangle((int)point.X, (int)point.Y, (int)point.Value, (int)point.Value));
+                e.Graphics.FillEllipse(new SolidBrush(point.Color), new Rectangle((int)point.X, (int)point.Y, (int)point.Value, (int)point.Value));
             }
         }
 

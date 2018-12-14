@@ -31,6 +31,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.textBox_function = new System.Windows.Forms.TextBox();
             this.label_results = new System.Windows.Forms.Label();
@@ -127,20 +128,26 @@
             this.tabPage_2d.TabIndex = 0;
             this.tabPage_2d.Text = "2D";
             this.tabPage_2d.UseVisualStyleBackColor = true;
-            this.tabPage_2d.Click += new System.EventHandler(this.tabPage_2d_Click);
             // 
             // myChart
             // 
             chartArea1.Name = "ChartArea1";
             this.myChart.ChartAreas.Add(chartArea1);
+            this.myChart.Enabled = false;
             legend1.Name = "Legend1";
             this.myChart.Legends.Add(legend1);
             this.myChart.Location = new System.Drawing.Point(0, 0);
             this.myChart.Name = "myChart";
             series1.ChartArea = "ChartArea1";
+            series1.IsVisibleInLegend = false;
             series1.Legend = "Legend1";
             series1.Name = "Series1";
+            series2.ChartArea = "ChartArea1";
+            series2.IsVisibleInLegend = false;
+            series2.Legend = "Legend1";
+            series2.Name = "Series2";
             this.myChart.Series.Add(series1);
+            this.myChart.Series.Add(series2);
             this.myChart.Size = new System.Drawing.Size(855, 599);
             this.myChart.TabIndex = 0;
             this.myChart.Text = "chart1";
@@ -155,7 +162,6 @@
             this.tabPage_3d.TabIndex = 1;
             this.tabPage_3d.Text = "3D";
             this.tabPage_3d.UseVisualStyleBackColor = true;
-            this.tabPage_3d.Click += new System.EventHandler(this.tabPage_3d_Click);
             // 
             // panel_3D
             // 
@@ -447,7 +453,9 @@
             this.columnHeader2,
             this.columnHeader3,
             this.columnHeader4});
+            this.listView_results.FullRowSelect = true;
             this.listView_results.Location = new System.Drawing.Point(892, 275);
+            this.listView_results.MultiSelect = false;
             this.listView_results.Name = "listView_results";
             this.listView_results.Size = new System.Drawing.Size(377, 386);
             this.listView_results.TabIndex = 17;

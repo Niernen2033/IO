@@ -12,6 +12,8 @@ namespace OptimizationGlobals
         public double Min { get; set; }
         public double Max { get; set; }
 
+        public static Compartment Empty { get { return new Compartment(); } }
+
         public Compartment(double min, double max)
         {
             if(min > max)

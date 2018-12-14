@@ -23,7 +23,8 @@ namespace OptimizationAlpha
         private Compartment _axisYRange;
         private FitnessPoint _bestValue;
 
-        DisplayFunction3D myDisplayFunction3D;
+        private DisplayFunction3D myDisplayFunction3D;
+        private DisplayFunction2D myDisplayFunction2D;
 
         public Form1()
         {
@@ -33,7 +34,31 @@ namespace OptimizationAlpha
             //disable legend in chart
             myChart.Series[0].IsVisibleInLegend = false;
 
+            this.myDisplayFunction2D = new DisplayFunction2D(this.myChart);
             this.myDisplayFunction3D = new DisplayFunction3D(this.panel_3D);
+
+
+            this.listView_results.SelectedIndexChanged += ListView_results_SelectedIndexChanged;
+        }
+
+        private void ListView_results_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (this.listView_results.SelectedItems.Count > 0)
+            {
+                if (_myArgumentsSymbol.Count == 1)
+                {
+                    double x = double.Parse(this.listView_results.SelectedItems[0].SubItems[1].Text);
+                    this.myDisplayFunction2D.ClearMarkedPoint();
+                    this.myDisplayFunction2D.AddPoint(x);
+                }
+                else if (_myArgumentsSymbol.Count == 2)
+                {
+                    double x = double.Parse(this.listView_results.SelectedItems[0].SubItems[1].Text);
+                    double y = double.Parse(this.listView_results.SelectedItems[0].SubItems[2].Text);
+                    this.myDisplayFunction3D.ClearPoints();
+                    this.myDisplayFunction3D.AddPoint(x,y, Color.Purple, 20);
+                }
+            }
         }
 
         private void PostInitializeComponent()
@@ -339,20 +364,13 @@ namespace OptimizationAlpha
             // display graph for function with 1 variable of for constant functions
             if (_myArgumentsSymbol.Count == 1)
             {
-                DisplayFunction2D myDisplayFunction2D = new DisplayFunction2D(myChart, _myFunctionExpression);
+                this.myDisplayFunction2D.ClearAll();
+                this.myDisplayFunction2D.Load(_myFunctionExpression);
                 // set axis X range
                 _axisXRange = new Compartment(_myRanges[0].Min, _myRanges[0].Max);
-                // set axis Y range
-                if (IsDigitsOnly(_myFunctionExpression))
-                {
-                    _axisYRange = new Compartment(-Convert.ToDouble(_myFunctionExpression), Convert.ToDouble(_myFunctionExpression));
-                }
-                else
-                {
-                    _axisYRange = new Compartment(myListOfFitnessPoints.Min().Fitness - 10, myListOfFitnessPoints.Max().Fitness + 10);
-                }
+
                 // show function graph
-                myDisplayFunction2D.Graph(_axisXRange, _axisYRange);
+                this.myDisplayFunction2D.Graph(_axisXRange);
             }
             // display graph for function with 2 variable
             else if (_myArgumentsSymbol.Count == 2)
@@ -365,23 +383,6 @@ namespace OptimizationAlpha
                 _axisYRange = new Compartment(_myRanges[1].Min, _myRanges[1].Max);
                 // show function graph
                 await this.myDisplayFunction3D.GraphAync(_axisXRange, _axisYRange);
-
-                //possible bests
-                double twinRangeFitness = (this.numericUpDown_precison.Value == 0) ? 0 : 1;
-                for (int i = 0; i < (int)this.numericUpDown_precison.Value; i++)
-                {
-                    twinRangeFitness /= 10;
-                }
-                twinRangeFitness = _bestValue.Fitness - twinRangeFitness;
-                foreach (FitnessPoint fitnessPoint in myListOfFitnessPoints)
-                {
-                    if (Math.Round(fitnessPoint.Fitness, (int)this.numericUpDown_precison.Value, MidpointRounding.AwayFromZero) <= _bestValue.Fitness &&
-                        Math.Round(fitnessPoint.Fitness, (int)this.numericUpDown_precison.Value, MidpointRounding.AwayFromZero) >= twinRangeFitness)
-                    {
-                        this.myDisplayFunction3D.AddPoint(fitnessPoint.Axis.Values[0], fitnessPoint.Axis.Values[1], Color.White, 6);
-                    }
-                }
-                this.myDisplayFunction3D.AddPoint(_bestValue.Axis.Values[0], _bestValue.Axis.Values[1], Color.Purple, 10);
             }
             this.button_search.Enabled = true;
         }
@@ -457,16 +458,6 @@ namespace OptimizationAlpha
             form.Show();
         }
 
-        private void tabPage_2d_Click(object sender, EventArgs e)
-        {
-            // DISPLAY 2d CHART
-        }
-
-        private void tabPage_3d_Click(object sender, EventArgs e)
-        {
-            // DISPLAY 3D CHART
-        }
-
         private void button_read_from_file_Click(object sender, EventArgs e)
         {
             // READ FROM FILE
@@ -476,7 +467,7 @@ namespace OptimizationAlpha
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = System.IO.Directory.GetCurrentDirectory();
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
